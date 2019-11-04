@@ -38,7 +38,7 @@ public class AlvinToCoraFormatFixture {
 	}
 
 	private String removeExtraFormatingAddedByFitnesse(String alvinXML) {
-		String tempXml = alvinXML.replaceAll("<pre>", "").replaceAll("</pre>", "");
+		String tempXml = alvinXML.replace("<pre>", "").replace("</pre>", "");
 		return StringEscapeUtils.unescapeHtml4(tempXml);
 	}
 
