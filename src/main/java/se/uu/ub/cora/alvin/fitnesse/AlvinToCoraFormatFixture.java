@@ -22,9 +22,9 @@ import org.apache.commons.text.StringEscapeUtils;
 
 import se.uu.ub.cora.alvin.mixedstorage.fedora.AlvinFedoraConverterFactory;
 import se.uu.ub.cora.alvin.mixedstorage.fedora.AlvinFedoraToCoraConverter;
-import se.uu.ub.cora.bookkeeper.data.DataGroup;
-import se.uu.ub.cora.bookkeeper.data.converter.DataToJsonConverter;
-import se.uu.ub.cora.bookkeeper.data.converter.DataToJsonConverterFactoryImp;
+import se.uu.ub.cora.data.DataGroup;
+import se.uu.ub.cora.data.converter.DataToJsonConverter;
+import se.uu.ub.cora.data.converter.DataToJsonConverterFactoryImp;
 import se.uu.ub.cora.json.builder.JsonBuilderFactory;
 import se.uu.ub.cora.json.builder.org.OrgJsonBuilderFactoryAdapter;
 
