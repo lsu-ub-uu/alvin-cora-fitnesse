@@ -33,7 +33,8 @@
 	<properties>
 		<json.version>2.0.1</json.version>
 		<fitnesseintegration.version>2.0.0</fitnesseintegration.version>
-		<alvinmixedstorage.version>2.0.0</alvinmixedstorage.version>
+		<alvinmixedstorage.version>3.0.0</alvinmixedstorage.version>
+		<basicdata.version>1.1.0</basicdata.version>
 		<javax.ws.rs.version>2.1.1</javax.ws.rs.version>
 		<fitnesse.version>20190716</fitnesse.version>
 	</properties>
@@ -69,6 +70,11 @@
 			<artifactId>alvinmixedstorage</artifactId>
 			<version>${alvinmixedstorage.version}</version>
 			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>se.uu.ub.cora</groupId>
+			<artifactId>basicdata</artifactId>
+			<version>${basicdata.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
