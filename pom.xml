@@ -29,8 +29,8 @@
 		<coralog4j.version>2.0.0</coralog4j.version>
 		<json.version>2.0.1</json.version>
 		<fitnesseintegration.version>2.0.0</fitnesseintegration.version>
-		<alvinmixedstorage.version>3.1.0</alvinmixedstorage.version>
-		<basicdata.version>1.4.0</basicdata.version>
+		<alvinmixedstorage.version>3.2.0</alvinmixedstorage.version>
+		<basicdata.version>1.5.0</basicdata.version>
 		<javax.ws.rs.version>2.1.1</javax.ws.rs.version>
 		<fitnesse.version>20190716</fitnesse.version>
 	</properties>
