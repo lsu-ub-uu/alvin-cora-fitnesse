@@ -113,6 +113,7 @@
 					<include>TheAlvinTests/</include>
 					<include>FrontPage/</include>
 					<include>properties</include>
+					<include>properties.xml</include>
 				</includes>
 				<excludes>
 					<exclude>**/*.zip</exclude>
