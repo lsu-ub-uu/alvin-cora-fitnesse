@@ -25,9 +25,9 @@
 		<logger.version>2.0.0</logger.version>
 		<coralog4j.version>2.0.0</coralog4j.version>
 		<json.version>2.0.1</json.version>
-		<fitnesseintegration.version>2.1.0</fitnesseintegration.version>
-		<alvinmixedstorage.version>3.2.0</alvinmixedstorage.version>
-		<basicdata.version>1.5.0</basicdata.version>
+		<fitnesseintegration.version>2.7.0</fitnesseintegration.version>
+		<alvinmixedstorage.version>3.4.0</alvinmixedstorage.version>
+		<basicdata.version>1.9.0</basicdata.version>
 		<javax.ws.rs.version>2.1.1</javax.ws.rs.version>
 		<smartrics-RestFixture.version>4.4</smartrics-RestFixture.version>
 		<commons-text.version>1.8</commons-text.version>
