@@ -23,7 +23,6 @@ import static org.testng.Assert.assertTrue;
 
 import org.testng.annotations.Test;
 
-import se.uu.ub.cora.alvin.fitnesse.AlvinFitnesseDependencyProvider;
 import se.uu.ub.cora.alvin.mixedstorage.fedora.AlvinFedoraToCoraConverterFactoryImp;
 
 public class AlvinFitnesseDependencyProviderTest {
