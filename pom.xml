@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>se.uu.ub.cora</groupId>
 		<artifactId>cora-parent</artifactId>
-		<version>1.1.1</version>
+		<version>1.3.0</version>
 	</parent>
 
 	<artifactId>alvincorafitnesse</artifactId>
@@ -22,12 +22,12 @@
 	<name>Alvin Cora Fitnesse</name>
 
 	<properties>
-		<logger.version>2.1.0</logger.version>
-		<coralog4j.version>2.1.0</coralog4j.version>
-		<json.version>2.1.0</json.version>
-		<fitnesseintegration.version>2.12-SNAPSHOT</fitnesseintegration.version>
-		<alvinmixedstorage.version>3.7.0</alvinmixedstorage.version>
-		<basicdata.version>1.11.0</basicdata.version>
+		<logger.version>2.2.0</logger.version>
+		<coralog4j.version>2.2.0</coralog4j.version>
+		<json.version>2.2.0</json.version>
+		<fitnesseintegration.version>3.1.0</fitnesseintegration.version>
+		<alvinmixedstorage.version>3.8.0</alvinmixedstorage.version>
+		<basicdata.version>1.12.0</basicdata.version>
 		<javax.ws.rs.version>2.1.1</javax.ws.rs.version>
 		<smartrics-RestFixture.version>4.4</smartrics-RestFixture.version>
 		<commons-text.version>1.9</commons-text.version>
