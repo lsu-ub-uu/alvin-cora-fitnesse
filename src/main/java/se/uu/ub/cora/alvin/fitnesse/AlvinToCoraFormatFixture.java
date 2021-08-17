@@ -22,11 +22,10 @@ import org.apache.commons.text.StringEscapeUtils;
 
 import se.uu.ub.cora.alvin.mixedstorage.fedora.AlvinFedoraConverterFactory;
 import se.uu.ub.cora.alvin.mixedstorage.fedora.AlvinFedoraToCoraConverter;
-import se.uu.ub.cora.basicdata.converter.DataToJsonConverterFactoryImp;
 import se.uu.ub.cora.data.DataGroup;
 import se.uu.ub.cora.data.converter.DataToJsonConverter;
-import se.uu.ub.cora.json.builder.JsonBuilderFactory;
-import se.uu.ub.cora.json.builder.org.OrgJsonBuilderFactoryAdapter;
+import se.uu.ub.cora.data.converter.DataToJsonConverterFactory;
+import se.uu.ub.cora.data.converter.DataToJsonConverterProvider;
 
 public class AlvinToCoraFormatFixture {
 
@@ -76,9 +75,9 @@ public class AlvinToCoraFormatFixture {
 	}
 
 	private DataToJsonConverter createDataGroupToJsonConverter(DataGroup dataGroup) {
-		DataToJsonConverterFactoryImp dataToJsonConverterFactory = new DataToJsonConverterFactoryImp();
-		JsonBuilderFactory factory = new OrgJsonBuilderFactoryAdapter();
-		return dataToJsonConverterFactory.createForDataElement(factory, dataGroup);
+		DataToJsonConverterFactory dataToJsonConverterFactory = DataToJsonConverterProvider
+				.createImplementingFactory();
+		return dataToJsonConverterFactory.factorUsingConvertible(dataGroup);
 	}
 
 	public String getAlvinXML() {
