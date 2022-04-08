@@ -1,5 +1,6 @@
 ---
 Help: A test that checks that idpLogin works as expected
+Prune
 Test
 ---
 !contents -R2 -g -p -f -h
