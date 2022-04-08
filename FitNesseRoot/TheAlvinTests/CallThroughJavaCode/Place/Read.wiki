@@ -12,10 +12,10 @@ alvin-place:22 is a minimal place
 
 alvin-place:15 also has two alternative names
 
-!| RecordEndpointFixture |
-| authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | place | alvin-place:22 | | OK |
-| $adminAuthToken | place | alvin-place:15 | | OK |
+#!| RecordEndpointFixture |
+#| authToken | type | id | testReadRecord? | getStatusType? |
+#| $adminAuthToken | place | alvin-place:22 | | OK |
+#| $adminAuthToken | place | alvin-place:15 | | OK |
 
 *!
 !***> List places
