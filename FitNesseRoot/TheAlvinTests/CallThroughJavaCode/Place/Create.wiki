@@ -15,7 +15,8 @@ Atlantis has a name, a historic country and coordinates.
 Imaginationland has a name, a country, and coordinates.
 Konungariket Elgaland-Vargaland is a complete record with a name, an alternative name, country, historic country, and coordinates.
 
-!| RecordEndpointFixture |
+!|comment|
+| RecordEndpointFixture |
 | authToken | type | json | testCreateRecordCreatedType? | getStatusType? | getCreatedId? |
 | $adminAuthToken | place | {"name":"authority","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvin"}]}]},{"name":"name","children":[{"name":"namePart","children":[{"name":"value","value":"Fantasia"}],"attributes":{"type":"defaultName"}}],"attributes":{"type":"authorized"}}],"attributes":{"type":"place"}} | place | CREATED | $createdId= |
 | $adminAuthToken | place | {"name":"authority","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvin"}]}]},{"name":"name","children":[{"name":"namePart","children":[{"name":"value","value":"Nangijala"}],"attributes":{"type":"defaultName"}}],"attributes":{"type":"authorized"}},{"name":"coordinates","children":[{"name":"latitude","value":"57.26478712789165"},{"name":"longitude","value":"18.442056566675937"}]}],"attributes":{"type":"place"}} | place | CREATED | $createdId2= |
@@ -26,7 +27,8 @@ Konungariket Elgaland-Vargaland is a complete record with a name, an alternative
 *!
 !***> Read newly created places as Json
 
-!| RecordEndpointFixture |
+!|comment|
+| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
 | $adminAuthToken | place | $createdId | =~/"value":"Fantasia"/ | OK |
 | $adminAuthToken | place | $createdId2 | =~/"value":"Nangijala"/ | OK |

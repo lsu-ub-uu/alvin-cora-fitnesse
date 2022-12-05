@@ -10,14 +10,16 @@ It should be possible to delete places through the REST API.
 
 First we create a place, to later be able to delete it
 
-!| RecordEndpointFixture |
+!|comment|
+| RecordEndpointFixture |
 | authToken | type | json | testCreateRecordCreatedType? | getStatusType? | getCreatedId? |
 | $adminAuthToken | place | {"name":"authority","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvin"}]}]},{"name":"name","children":[{"name":"namePart","children":[{"name":"value","value":"Fitnesse place to be deleted"}],"attributes":{"type":"defaultName"}}],"attributes":{"type":"authorized"}}],"attributes":{"type":"place"}} | place | CREATED | $createdId= |
 
 *!
 !***> Read newly created place as Json
 
-!| RecordEndpointFixture |
+!|comment|
+| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
 | $adminAuthToken | place | $createdId | =~/"value":"Fitnesse place to be deleted"/ | OK |
 
