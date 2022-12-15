@@ -1,0 +1,8 @@
+---
+Static
+---
+!1 Acceptancd tests and documentation for Alvin
+
+TheAlvinTests
+
+!note FitNesse ${FITNESSE_VERSION}

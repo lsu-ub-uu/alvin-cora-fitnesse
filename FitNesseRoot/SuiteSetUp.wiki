@@ -1,0 +1,32 @@
+---
+Suite
+---
+!***> Setup import and scripts
+| import |
+| se.uu.ub.cora.fitnesseintegration |
+| se.uu.ub.cora.fitnesseintegration.file |
+| se.uu.ub.cora.fitnesseintegration.compare |
+| se.uu.ub.cora.fitnesseintegration.server.compare.fixtures |
+| se.uu.ub.cora.alvin.fitnesse |
+
+!| script | SystemUrl |
+| setUrl | ${systemUnderTestUrl} |
+| setAppTokenVerifierUrl | ${appTokenVerifierUrl} |
+| setIdpLoginUrl | ${idpLoginUrl} |
+| setGatekeeperServerUrl | ${gatekeeperServerUrl} |
+
+!| script | DependencyProvider |
+| setHttpHandlerFactoryClassName | se.uu.ub.cora.httphandler.HttpHandlerFactoryImp |
+| setJsonToDataFactoryClassName | se.uu.ub.cora.clientdata.converter.jsontojava.JsonToDataConverterFactoryImp |
+| setChildComparerUsingClassName | se.uu.ub.cora.fitnesseintegration.ChildComparerImp |
+| setComparerFactoryUsingClassName | se.uu.ub.cora.fitnesseintegration.compare.ComparerFactoryImp |
+
+
+!define TEST_SYSTEM {slim}
+# TODO: Move archiveFileSystemPath more near to Archive Tests
+#!define archiveFileSystemPath {/tmp/sharedArchiveReadable/systemOne}
+
+!***> Import classes through pom.xml
+!pomFile ./pom.xml
+*!
+*!
