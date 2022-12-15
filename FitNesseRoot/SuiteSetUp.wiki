@@ -22,11 +22,11 @@ Suite
 | setComparerFactoryUsingClassName | se.uu.ub.cora.fitnesseintegration.compare.ComparerFactoryImp |
 
 
-!define TEST_SYSTEM {slim}
+#!define TEST_SYSTEM {slim}
 # TODO: Move archiveFileSystemPath more near to Archive Tests
 #!define archiveFileSystemPath {/tmp/sharedArchiveReadable/systemOne}
 
-!***> Import classes through pom.xml
-!pomFile ./pom.xml
-*!
+#!***> Import classes through pom.xml
+#!pomFile ./pom.xml
+#*!
 *!
