@@ -1,7 +1,7 @@
 ---
 Static
 ---
-!1 Acceptancd tests and documentation for Alvin
+!1 Acceptance tests and documentation for Alvin
 
 TheAlvinTests
 
