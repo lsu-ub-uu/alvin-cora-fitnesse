@@ -107,6 +107,7 @@
 					<include>FrontPage/</include>
 					<include>properties</include>
 					<include>properties.xml</include>
+					<include>content.txt</include>
 					<include>SuiteSetUp.wiki</include>
 					<include>_root.wiki</include>
 				</includes>
