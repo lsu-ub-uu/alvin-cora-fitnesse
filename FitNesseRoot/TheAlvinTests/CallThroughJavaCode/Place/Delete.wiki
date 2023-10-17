@@ -30,7 +30,7 @@ There are 6 places with the newly created place
 
 !| RecordEndpointFixture |
 | authToken | type | testReadRecordList? | getStatusType? |
-| $adminAuthToken | place | | OK |
+| $adminAuthToken | alvin-place | | OK |
 
 *!
 !***> Delete newly created place
@@ -53,6 +53,6 @@ There are 6 places with the newly created place
 
 !| RecordEndpointFixture |
 | authToken | type | testReadRecordList? | getStatusType? |
-| $adminAuthToken | place | | OK |
+| $adminAuthToken | alvin-place | | OK |
 
 *!

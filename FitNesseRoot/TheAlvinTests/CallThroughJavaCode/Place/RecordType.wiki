@@ -9,7 +9,7 @@ It should be possible to read the recordType for place from the REST API.
 
 !| RecordEndpointFixture |
 | authToken | type | id | testReadRecord? | getStatusType? |
-| $adminAuthToken | recordType | place | | OK |
+| $adminAuthToken | recordType | alvin-place | | OK |
 
 *!
 It should be possible to read the top level metadata group for a new place from the REST API
