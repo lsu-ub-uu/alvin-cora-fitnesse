@@ -5,28 +5,31 @@ Perform a search for places
 
 !***> Test searching for any place
 
-!| RecordEndpointFixture |
+!| comment |
+| RecordEndpointFixture |
 | authToken | searchId | json | testSearchRecord? | getStatusType? |
 | $adminAuthToken | alvin-placeSearch | {"name":"placeSearch","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"placeSearchTerm","value":"**"}]}]}]} | | OK |
 
 *!
 !***> Test searching for a place with an alternative name containing special characters (arabic)
 
-!| RecordEndpointFixture |
+!| comment |
+| RecordEndpointFixture |
 | authToken | searchId | json | testSearchRecord? | getStatusType? |
 | $adminAuthToken | alvin-placeSearch | {"name":"placeSearch","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"placeSearchTerm","value":"الإسكندرية"}]}]}]} | | OK |
 
 *!
 !***> Test searching for place by country code (ISO 3166-1 alpha-2) in free text
 
-!| RecordEndpointFixture |
+!| comment |
+| RecordEndpointFixture |
 | authToken | searchId | json | testSearchRecord? | getStatusType? |
 | $adminAuthToken | alvin-placeSearch | {"name":"placeSearch","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"placeSearchTerm","value":"se"}]}]}]} | | OK |
 
 *!
 !***> Test searching for place by country code (ISO 3166-1 alpha-2) in the search field for country
-
-!| RecordEndpointFixture |
+!| comment |
+| RecordEndpointFixture |
 | authToken | searchId | json | testSearchRecord? | getStatusType? |
 | $adminAuthToken | alvin-placeSearch | {"name":"placeSearch","children":[{"name":"include","children":[{"name":"includePart","children":[{"name":"placeCountrySearchTerm","value":"se"}]}]}]} | | OK |
 
