@@ -1,0 +1,89 @@
+---
+Test
+---
+!1 Testing metacompleter and creator for metadataTextVariable
+If text ids are not provided when creating a metadataTextVariable, the text ids are added and the texts are created in storage if they do not already exist.
+
+Read texts to make sure they do not exist
+
+!***> Read fitnesseTestTextVarText and fitnesseTestTextVarDefText
+
+!| RecordEndpointFixture |
+| id | type | testReadRecord? | getStatusType? |
+| fitnesseTestTextVarText | text | | NOT_FOUND |
+| fitnesseTestTextVarDefText | text | | NOT_FOUND |
+
+*!
+When a metadataTextVariable is created, two presentationVars are automatically created, one for input and one for output.
+
+Read pVars to make sure they do not exist
+
+!***> Read fitnesseTestPVar and fitnesseTestOutputPVar
+
+!| RecordEndpointFixture |
+| id | type | testReadRecord? | getStatusType? |
+| fitnesseTestPVar | presentation | | NOT_FOUND |
+| fitnesseTestOutputPVar | presentation | | NOT_FOUND |
+
+*!
+!2 
+!2 Create a new metadataTextVariable
+!***> Create a new metadataTextVariable (fitnesseTestTextVar)
+
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? |
+| $adminAuthToken | metadata | {"children":[{"children":[{"name":"id","value":"fitnesseTestTextVar"},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvin"}],"name":"dataDivider"},{"children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"metadataTextVariable"}],"name":"validationType"}],"name":"recordInfo"},{"name":"nameInData","value":"fintnesseTest"},{"name":"regEx","value":"(^[0-9A-Za-z:-_]{2,50}$)"}],"name":"metadata","attributes":{"type":"textVariable"}} | | CREATED |
+
+*!
+Read fitnesseTestTextVar to see that links to texts have been added to the metadata
+
+!***> Read fitnesseTestTextVar
+
+!| RecordEndpointFixture |
+| id | type | testReadRecord? | getStatusType? |
+| fitnesseTestTextVar | metadata | =~/"name":"id","value":"fitnesseTestTextVar"/ | OK |
+
+*!
+!2 Read texts again to see that they have been created as Alvin texts including lang no
+
+!***> Read fitnesseTestTextVarText and fitnesseTestTextVarDefText
+
+!define expectedReadData {!- {"name":"text","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvin"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"alvinText"}]}]},{"name":"textPart","children":[{"name":"text","value":"Text för:fitnesseTestTextVarText"}],"attributes":{"type":"default","lang":"sv"}},{"name":"textPart","children":[{"name":"text","value":"Text for:fitnesseTestTextVarText"}],"attributes":{"type":"alternative","lang":"en"}},{"name":"textPart","children":[{"name":"text","value":"Tekst for:fitnesseTestTextVarText"}],"attributes":{"type":"alternative","lang":"no"}}]} -!}
+!define expectedCompareResult {OK}
+!| ChildComparerFixture |
+| authToken | type | id | testReadAndStoreRecord? | children | testCheckContainWithValues? |
+| $adminAuthToken | text | fitnesseTestTextVarText | | ${expectedReadData} | ${expectedCompareResult} |
+
+!define expectedReadData {!- {"name":"text","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvin"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"alvinText"}]}]},{"name":"textPart","children":[{"name":"text","value":"Text för:fitnesseTestTextVarDefText"}],"attributes":{"type":"default","lang":"sv"}},{"name":"textPart","children":[{"name":"text","value":"Text for:fitnesseTestTextVarDefText"}],"attributes":{"type":"alternative","lang":"en"}},{"name":"textPart","children":[{"name":"text","value":"Tekst for:fitnesseTestTextVarDefText"}],"attributes":{"type":"alternative","lang":"no"}}]} -!}
+!define expectedCompareResult {OK}
+!| ChildComparerFixture |
+| authToken | type | id | testReadAndStoreRecord? | children | testCheckContainWithValues? |
+| $adminAuthToken | text | fitnesseTestTextVarDefText | | ${expectedReadData} | ${expectedCompareResult} |
+
+
+
+*!
+Read presentationVars again to see that they have been created
+
+!***> Read fitnesseTestPVar and fitnesseTestOutputPVar
+
+!| RecordEndpointFixture |
+| id | type | testReadRecord? | getStatusType? |
+| fitnesseTestPVar | presentation | | OK |
+| fitnesseTestOutputPVar | presentation | | OK |
+
+*!
+!1 Reset testdata
+Remove data created for this test
+
+!***> Delete created metadataTextVariable, presentationVars and texts
+
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $adminAuthToken | presentation | fitnesseTestPVar | | OK |
+| $adminAuthToken | presentation | fitnesseTestOutputPVar | | OK |
+| $adminAuthToken | metadata | fitnesseTestTextVar | | OK |
+| $adminAuthToken | text | fitnesseTestTextVarText | | OK |
+| $adminAuthToken | text | fitnesseTestTextVarDefText | | OK |
+
+*!
