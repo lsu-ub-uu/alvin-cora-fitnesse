@@ -1,0 +1,22 @@
+---
+Test
+---
+!1 AppToken
+See detailed description in systemOne's Fitnesse
+
+!2 Test cases
+!3 Users
+ * '''Case 1: ''' All users should be able to create an appToken for their own user. (The user already has an appToken)
+ * '''Assertion 1a: ''' ApptokenClearText must never be stored.
+ * '''Case 2: ''' All users should be able to read the appToken annotations for their own user.
+ * '''Case 3: ''' All users should be able to login with their own appToken.
+ * '''Case 4: ''' A user should not be able to login with another user's appToken.
+ * '''Case 5: ''' All users should be able to update the note in any of their own appTokens.
+ * '''Case 5: ''' A user should not be able to update the note to an own appToken.
+ * '''Case 6: ''' All users should be able to delete their own appToken.
+ * '''Case 7: ''' A user should not be able to remove another user's appToken.
+
+!3 System Admin
+ * '''Case 1: ''' SystemAdmin should be able to create an appToken for any user.
+ * '''Case 2: ''' SystemAdmin should not be able to login with another user's appToken.
+ * '''Case 3: ''' SystemAdmin should be able to remove all other user's appToken.
