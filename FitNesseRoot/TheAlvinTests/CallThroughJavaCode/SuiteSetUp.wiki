@@ -8,7 +8,7 @@ Suite
 
 !| AppTokenEndpointFixture |
 | userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
-| 131313 | | | $adminAuthToken= | CREATED |
+| fitnesseAdmin@system.cora.uu.se | | | $adminAuthToken= | CREATED |
 
 *!
 !| script | AuthTokenHolder |
@@ -18,7 +18,7 @@ Suite
 
 !| AppTokenEndpointFixture |
 | userId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
-| 121212 | | | $userAuthToken= | CREATED |
+| fitnesseUser@system.cora.uu.se | | | $userAuthToken= | CREATED |
 
 *!
 !| script | AuthTokenHolder |
