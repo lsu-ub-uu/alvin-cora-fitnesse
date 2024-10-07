@@ -25,7 +25,7 @@
 		<logger.version>2.10.0</logger.version>
 		<coralog4j.version>2.16.0</coralog4j.version>
 		<json.version>3.10.0</json.version>
-		<fitnesseintegration.version>4.8.0</fitnesseintegration.version>
+		<fitnesseintegration.version>4.9.0</fitnesseintegration.version>
 		<basicdata.version>6.0.0</basicdata.version>
 		<javax.ws.rs.version>2.1.1</javax.ws.rs.version>
 		<smartrics-RestFixture.version>4.4</smartrics-RestFixture.version>
