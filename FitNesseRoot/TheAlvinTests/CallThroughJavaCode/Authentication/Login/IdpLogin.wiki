@@ -48,7 +48,7 @@ IdpLogin is in test and production secured by apache and common login systems an
 !***> Logout
 
 !| AppTokenEndpointFixture |
-| userId | authTokenToLogOut | removeAuthTokenForUser? | getStatusType? |
+| loginId | authTokenToLogOut | removeAuthTokenForUser? | getStatusType? |
 | 57 | $userAuthToken | | OK |
 
 *!
