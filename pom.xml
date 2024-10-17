@@ -18,7 +18,7 @@
 
 	<artifactId>alvincorafitnesse</artifactId>
 	<packaging>jar</packaging>
-	<version>1.10.0-SNAPSHOT</version>
+	<version>1.10.0</version>
 	<name>Alvin Cora Fitnesse</name>
 
 	<properties>
@@ -36,7 +36,7 @@
 		<connection>scm:git:https://github.com/lsu-ub-uu/alvin-cora-fitnesse.git</connection>
 		<developerConnection>scm:git:https://github.com/lsu-ub-uu/alvin-cora-fitnesse.git</developerConnection>
 		<url>https://github.com/lsu-ub-uu/alvin-cora-fitnesse.git</url>
-		<tag>release/1.10</tag>
+		<tag>alvincorafitnesse-1.10.0</tag>
 	</scm>
 
 	<dependencies>
