@@ -19,6 +19,11 @@ Test
 !1 !-IdpLoginTest-!
 IdpLogin is in test and production secured by apache and common login systems and can not be accessed without a successful login into the local idp. We are expecting the parameter eppn to be present when the user is allowed past apache and can access the idpLogin server. This eppn sent on to gatekeeperServer that looks for a user in the database with a matching eppn. Gatekeeper returns an authtoken for the user, and stores the user in the currently logged in users under the returned authtoken. If no user is found for an eppn an authtoken is created for and returned for the guest user.
 
+!***> Login for fitnesse admin
+!| AppTokenEndpointFixture |
+| loginId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
+| fitnesseAdmin@system.cora.uu.se | | | $adminAuthToken= | CREATED |
+
 !2 Fetch authTokens using idpLogin
 !***> Get authTokens from idpLogin server
 
