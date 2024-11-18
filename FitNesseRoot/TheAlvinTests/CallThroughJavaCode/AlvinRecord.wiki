@@ -1,0 +1,7 @@
+---
+Test
+---
+!1 Alvin-record
+Bibliographic record in Alvin. MARCXML - record
+
+!include -seamless .TheAlvinTests.CallThroughJavaCode.AlvinRecord.RecordType

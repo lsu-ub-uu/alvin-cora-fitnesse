@@ -23,4 +23,17 @@ Suite
 *!
 !| script | AuthTokenHolder |
 | setUserAuthToken | $userAuthToken |
+
+!2 Login for Alvin example users
+!***> Hämta authTokens från idpLogin server
+
+!| IdpLoginServletFixture |
+| EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getValidForNoSeconds? | getDeleteUrl? |
+| userNotInDb@user.uu.se | |  |  | $guestToken= | |  |
+#| fitnesseSystemAdmin@user.uu.se | | |  | $systemAdminAuthToken= | |  |
+#| fitnesseDomainAdminUU@user.uu.se | |  |  | $domainAdminUUAuthToken= | |  |
+#| fitnesseDomainAdminKTH@user.kth.se | | |  | $domainAdminKTHAuthToken= | | |
+
+*!
+
 *!
