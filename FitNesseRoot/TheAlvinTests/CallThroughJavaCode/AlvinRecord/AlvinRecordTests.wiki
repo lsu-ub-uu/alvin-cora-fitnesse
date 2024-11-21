@@ -8,10 +8,10 @@ Static
  
 !4 Read tests
  * '''Admin'''
-  * '''Case 2a''': An admin should be able to see alvin records with any visibility
+  * '''Case 2a''': An admin should be able to list alvin records with any visibility
   * '''Case 2b''': An admin should be able to read any visibility record
  * '''Guest'''
-  * '''Case 3a''': A guest should only be able to see published records
+  * '''Case 3a''': A guest should only be able to search published records
   * '''Case 3b''': A guest should be only able to read published records
   
  --------
