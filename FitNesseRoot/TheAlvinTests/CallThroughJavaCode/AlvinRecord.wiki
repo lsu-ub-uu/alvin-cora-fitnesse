@@ -713,3 +713,5 @@ Alvin-record holds the definitions for the bibliographic records in Alvin.
 ${alvinRecordRecordTypeDefinition}
 }}}
 !include -seamless .TheAlvinTests.CallThroughJavaCode.AlvinRecord.AlvinRecordTests
+!include -seamless .TheAlvinTests.CallThroughJavaCode.AlvinRecord.Definition
+!include -seamless .TheAlvinTests.CallThroughJavaCode.AlvinRecord.Read

@@ -1,0 +1,64 @@
+---
+Static
+---
+!***< Setup for binary tests 
+!define expectedFileSize {316188}
+
+!define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"TiffImage1.tiff"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
+!define unpublishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"unpublished"}]},{"name":"originalFileName","value":"TiffImage2.tiff"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
+!define hiddenBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"hidden"}]},{"name":"originalFileName","value":"TiffImage3.tiff"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
+
+
+Create three binaries, one for each type of visibility
+!| RecordEndpointFixture |
+| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
+| $alvinAdminAuthToken | binary | ${publishedBinary} | | CREATED | $publishedRecordId= |
+| $alvinAdminAuthToken | binary | ${unpublishedBinary} | | CREATED | $unpublishedRecordId= |
+| $alvinAdminAuthToken | binary | ${hiddenBinary} | | CREATED | $hiddenRecordId= |
+*!
+
+!3 Read tests
+!***> '''Case 1''' Admin tests
+!***< Setup admin test case
+!define currentAuthToken {$alvinAdminAuthToken}
+!define recordId {$hiddenRecordId}
+
+### Expect all 3 records are listed (published, unpunlished and hidden (TiffImage1.tiff, TiffImage2.tiff and TiffImage3.tiff))
+!define expectedListResult {=~/(?=.*"name":"originalFileName","value":"TiffImage1.tiff")(?=.*"name":"originalFileName","value":"TiffImage2.tiff")(?=.*"name":"originalFileName","value":"TiffImage3.tiff")/}
+!define recordType {binary}
+*!
+!***> '''Case 1a''': An admin should be able to list binaries with any visibility
+!include -seamless .HelperPages.listStoreRecord
+*!
+!***> '''Case 1b''': An admin should be able to read binaries of any visibility
+!| ChildComparerFixture |
+| authToken | type   | id | testReadAndStoreRecord? | getStatusType? |
+| ${currentAuthToken} | binary | $publishedRecordId | | OK |
+| ${currentAuthToken} | binary| $unpublishedRecordId | | OK |
+| ${currentAuthToken} | binary | $hiddenRecordId | | OK |
+*!
+*!
+!***> '''Case 2''' Guest tests
+!***< Setup guest test case
+!define currentAuthToken {$guestToken}
+*!
+!***> '''Case 2a''': A guest should be only able to read published binaries
+!| ChildComparerFixture |
+| authToken | type   | id | testReadAndStoreRecord? | getStatusType? |
+| ${currentAuthToken} | binary | $publishedRecordId | | OK |
+| ${currentAuthToken} | binary | $unpublishedRecordId | | FORBIDDEN |
+| ${currentAuthToken} | binary | $hiddenRecordId | | FORBIDDEN |
+*!
+*!
+
+!***< Clean up binary records
+!| RecordEndpointFixture |
+| authToken | type | id | testDeleteRecord? | getStatusType? |
+| $alvinAdminAuthToken | binary | $publishedRecordId | | OK |
+| $alvinAdminAuthToken | binary | $unpublishedRecordId | | OK |
+| $alvinAdminAuthToken | binary | $hiddenRecordId | | OK |
+
+Reset headers for smartrics fixture
+| Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
+| restfixture.default.headers | |
+*!

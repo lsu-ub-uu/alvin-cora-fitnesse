@@ -15,5 +15,3 @@ Static
   * '''Case 3b''': A guest should be only able to read published records
   
  --------
-!include -seamless .TheAlvinTests.CallThroughJavaCode.AlvinRecord.Definition
-!include -seamless .TheAlvinTests.CallThroughJavaCode.AlvinRecord.Read
