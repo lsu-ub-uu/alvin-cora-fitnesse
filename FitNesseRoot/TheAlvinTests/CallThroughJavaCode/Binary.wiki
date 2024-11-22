@@ -72,6 +72,6 @@ Metadata group for binary data
 ${binaryDefinition}
 }}}
 *!
-!include -seamless .TheAlvinTests.CallThroughJavaCode.Binary.ValidationType
+!include -seamless .TheAlvinTests.CallThroughJavaCode.Binary.GenericBinary.ValidationType
 !include -seamless .TheAlvinTests.CallThroughJavaCode.Binary.GenericBinary.BinaryTests
 !include -seamless .TheAlvinTests.CallThroughJavaCode.Binary.GenericBinary.ReadTests
