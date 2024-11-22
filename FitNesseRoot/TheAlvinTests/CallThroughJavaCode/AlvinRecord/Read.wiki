@@ -1,0 +1,89 @@
+---
+Static
+---
+!***< Create test data for READ tests
+!define recordType {alvin-record}
+!define expectedCreateResult {CREATED}
+
+!define alvinRecordPublished {!-{"name":"record","children":[{"name":"typeOfResource","value":"txt"},{"name":"title","children":[{"name":"mainTitle","value":"fitnesse1"}]},{"name":"physicalLocation","children":[{"name":"heldBy","children":[{"name":"location","children":[{"name":"linkedRecordType","value":"alvin-location"},{"name":"linkedRecordId","value":"3"}]}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"recordInfo","children":[{"name":"id","value":"123123"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"record"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvinData"}]}]}]}-!}
+!define alvinRecordUnpublished {!-{"name":"record","children":[{"name":"typeOfResource","value":"txt"},{"name":"title","children":[{"name":"mainTitle","value":"fitnesse2"}]},{"name":"physicalLocation","children":[{"name":"heldBy","children":[{"name":"location","children":[{"name":"linkedRecordType","value":"alvin-location"},{"name":"linkedRecordId","value":"3"}]}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"unpublished"}]},{"name":"recordInfo","children":[{"name":"id","value":"123124"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"record"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvinData"}]}]}]}-!}
+!define alvinRecordHidden {!-{"name":"record","children":[{"name":"typeOfResource","value":"txt"},{"name":"title","children":[{"name":"mainTitle","value":"fitnesse3"}]},{"name":"physicalLocation","children":[{"name":"heldBy","children":[{"name":"location","children":[{"name":"linkedRecordType","value":"alvin-location"},{"name":"linkedRecordId","value":"3"}]}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"hidden"}]},{"name":"recordInfo","children":[{"name":"id","value":"123125"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"record"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvinData"}]}]}]}-!}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| $alvinAdminAuthToken | ${recordType} | ${alvinRecordPublished} |  | ${expectedCreateResult} | $publishedRecord= |
+| $alvinAdminAuthToken | ${recordType} | ${alvinRecordUnpublished} |  | ${expectedCreateResult} | $unpublishedRecord= |
+| $alvinAdminAuthToken | ${recordType} | ${alvinRecordHidden} |  | ${expectedCreateResult} | $hiddenRecord= |
+*!
+
+!3 Read tests
+#!***> It should be possible to read an instance of validationType for recordType
+#As a validationType instance
+#!define currentAuthToken {$alvinAdminAuthToken}
+#!define recordType {validationType}
+#!define recordId {recordType}
+#!include -seamless .HelperPages.readRecord
+#
+#As a recordType instance
+#!define recordType {recordType}
+#!define recordId {alvin-record}
+#!include -seamless .HelperPages.readRecord
+#*!
+!***> '''Case 2''' Admin tests
+!***< Setup admin test case
+!define currentAuthToken {$alvinAdminAuthToken}
+!define recordId {$hiddenRecord}
+
+### Expect all 3 records are listed (published, unpunlished and hidden (fitnesse1, fitnesse2 and fitnesse3))
+!define expectedListResult {=~/(?=.*"name":"mainTitle","value":"fitnesse1")(?=.*"name":"mainTitle","value":"fitnesse2")(?=.*"name":"mainTitle","value":"fitnesse3")/}
+!define recordType {alvin-record}
+*!
+!***> '''Case 2a''': An admin should be able to list alvin records with any visibility
+!include -seamless .HelperPages.listStoreRecord
+*!
+!***> '''Case 2b''': An admin should be able to read any visibility record
+!| ChildComparerFixture |
+| authToken | type   | id | testReadAndStoreRecord? | getStatusType? |
+| ${currentAuthToken} | alvin-record | $publishedRecord | | OK |
+| ${currentAuthToken} | alvin-record | $unpublishedRecord | | OK |
+| ${currentAuthToken} | alvin-record | $hiddenRecord | | OK |
+*!
+*!
+!***> '''Case 3''' Guest tests
+!***< Setup guest test case
+!define currentAuthToken {$guestToken}
+!define recordId {$publishedRecord}
+
+### Expect only 1 record is listed (published (fitnesse1) and the others are not listed (unpublished and hidden (fitnesse2 and fitnesse3)).
+!define expectedSearchResult {(?=.*"name":"mainTitle","value":"fitnesse1")(?!.*"name":"mainTitle","value":"fitnesse2")(?!.*"name":"mainTitle","value":"fitnesse3")}
+!define recordId {$publishedRecord}
+*!
+!***> '''Case 3a''': A guest should only be able to search published records
+!define alvinRecordSearchData {!-%7B%22name%22%3A%22alvinRecordSearch%22%2C%22children%22%3A%5B%7B%22name%22%3A%22include%22%2C%22children%22%3A%5B%7B%22name%22%3A%22includePart%22%2C%22children%22%3A%5B%7B%22name%22%3A%22alvinRecordSearchTerm%22%2C%22value%22%3A%22**%22%7D%5D%7D%5D%7D%5D%7D-!}
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
+| setHeader | Accept:application/vnd.uub.recordList+json|
+| GET | /record/searchResult/alvinRecordSearch?searchData=${alvinRecordSearchData} | 200 | | |
+| let | searchResult | js | response.body |  |
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $searchResult | and regex | ${expectedSearchResult} |
+*!
+!***> '''Case 3b''': A guest should be only able to read published records
+!| ChildComparerFixture |
+| authToken | type   | id | testReadAndStoreRecord? | getStatusType? |
+| ${currentAuthToken} | alvin-record | $publishedRecord | | OK |
+| ${currentAuthToken} | alvin-record | $unpublishedRecord | | FORBIDDEN |
+| ${currentAuthToken} | alvin-record | $hiddenRecord | | FORBIDDEN |
+*!
+*!
+
+
+
+!***< Clean up READ test data
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
+| setHeader | Accept:application/vnd.uub.record+json!-
+-!Content-Type:application/vnd.uub.record+json!-
+-!authToken:$alvinAdminAuthToken |
+| DELETE | /record/alvin-record/$publishedRecord | 200 | | |
+| DELETE | /record/alvin-record/$unpublishedRecord | 200 | | |
+| DELETE | /record/alvin-record/$hiddenRecord | 200 | | |
+*!

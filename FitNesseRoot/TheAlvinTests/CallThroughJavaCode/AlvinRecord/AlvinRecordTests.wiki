@@ -1,0 +1,17 @@
+---
+Static
+---
+!2 Alvin-record tests
+
+!4 Definition test
+ * '''Case 1''': The definition must be correct for alvin-record
+ 
+!4 Read tests
+ * '''Admin'''
+  * '''Case 2a''': An admin should be able to list alvin records with any visibility
+  * '''Case 2b''': An admin should be able to read any visibility record
+ * '''Guest'''
+  * '''Case 3a''': A guest should only be able to search published records
+  * '''Case 3b''': A guest should be only able to read published records
+  
+ --------

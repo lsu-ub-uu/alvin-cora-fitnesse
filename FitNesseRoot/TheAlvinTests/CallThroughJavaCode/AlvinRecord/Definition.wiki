@@ -1,0 +1,10 @@
+---
+Static
+---
+!3 Definition test 
+!4 ''Disabled until stable definition is reached''
+#!***> '''Case 1''': The definition must be correct for alvin-record
+#!| DefinitionCompareFixture |
+#| authToken | recordId | getDefinitionView? |
+#| $adminAuthToken | recordGroup | ${alvinRecordRecordTypeDefinition} |
+#*!

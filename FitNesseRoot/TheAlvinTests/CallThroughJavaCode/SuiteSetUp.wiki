@@ -5,6 +5,12 @@ Suite
 !***> Setup login
 
 !***> Login for admin
+!***> Create alvin authTokens
+!| AppTokenEndpointFixture |
+| loginId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
+| alvinAdmin@cora.epc.ub.uu.se | a50ca087-a3f5-4393-b2bb-315436d3c3be | | $alvinAdminAuthToken= |  |
+| alvinUser@cora.epc.ub.uu.se | 39291112-aff2-4929-b201-515720693722 | | $alvinUserAuthToken= |  |
+*!
 
 !| AppTokenEndpointFixture |
 | loginId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
@@ -23,4 +29,16 @@ Suite
 *!
 !| script | AuthTokenHolder |
 | setUserAuthToken | $userAuthToken |
+
+!2 Login for Alvin example users
+!***> Hämta authTokens från idpLogin server
+
+!| IdpLoginServletFixture |
+| EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getValidForNoSeconds? | getDeleteUrl? |
+| userNotInDb@user.uu.se | |  |  | $guestToken= | |  |
+#| fitnesseSystemAdmin@user.uu.se | | |  | $systemAdminAuthToken= | |  |
+#| fitnesseDomainAdminUU@user.uu.se | |  |  | $domainAdminUUAuthToken= | |  |
+#| fitnesseDomainAdminKTH@user.kth.se | | |  | $domainAdminKTHAuthToken= | | |
+*!
+
 *!
