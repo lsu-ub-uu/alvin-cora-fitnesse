@@ -10,13 +10,14 @@ Static
   * '''Case 2a''': A guest should be only able to read published binary data
 
 !***> Admin tests
-!***> '''Case 1a''': An admin should be able to read binary data of any visibility
+!***< Setup admin test case
 !define currentAuthToken {$alvinAdminAuthToken}
-!define expectedDownloadAnswer {}
-!define expectedDownloadStatus {OK}
-
+*!
+!***> '''Case 1a''': An admin should be able to read binary data of any visibility
 !5 '''Read published'''
 !define recordId {$publishedRecordId}
+!define expectedDownloadAnswer {}
+!define expectedDownloadStatus {OK}
 !| DownloadFixture |
 | authToken | recordType | recordId | representation | testDownload? | getStatusType?|
 | ${currentAuthToken} | binary | ${recordId} | master | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
