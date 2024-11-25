@@ -1,0 +1,27 @@
+---
+Static
+---
+
+----
+!3 Iiif tests
+ * '''Admin'''
+  * '''Case 1a''': An admin case
+ * '''Guest'''
+  * '''Case 2a''': A guest case
+
+!***> Admin tests
+!***< Setup admin test case
+!define currentAuthToken {$alvinAdminAuthToken}
+*!
+
+!***> '''Case 1a''': An admin case
+*!
+*!
+!***> Guest tests
+!***< Setup guest test case
+!define currentAuthToken {$guestToken}
+*!
+!***> '''Case 2a''': A guest case
+
+*!
+*!
