@@ -5,16 +5,16 @@ Static
 ----
 !3 Iiif tests
  * '''Admin'''
-  * '''Case 1a''': IIF protocol information must be present for an admin. Information must contain a server and identifier properties. 
+  * '''Case 1a''': IIF protocol information must be present for all visibilities as an admin. Information must contain a server and identifier properties. 
  * '''Guest'''
-  * '''Case 2a''': IIF protocol information must only be present for published binaries for guests
+  * '''Case 2a''': IIF protocol information must ''only'' be present for published binaries as a guest
 
 !***> Admin tests
 !***< Setup admin test case
 !define currentAuthToken {$alvinAdminAuthToken}
 *!
 
-!***> '''Case 1a''': IIF protocol information must be present for an admin. Information must contain a server and identifier properties. 
+!***> '''Case 1a''': IIF protocol information must be present for all visibilities as an admin. Information must contain a server and identifier properties. 
 !| ChildComparerFixture |
 | authToken | type |id |testReadAndStoreRecord? |
 | ${currentAuthToken} | binary | $publishedRecordId | =~/[!-"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/","identifier":"binary:\d*"\}\}-!]/ |
@@ -27,7 +27,7 @@ Static
 !define currentAuthToken {$guestToken}
 *!
 
-!***> '''Case 2a''': IIF protocol information must only be present for published binaries for guests
+!***> '''Case 2a''': IIF protocol information must only be present for published binaries as a guest
 !| ChildComparerFixture |
 | authToken | type | id | testReadAndStoreRecord? |
 | ${currentAuthToken} | binary | $publishedRecordId | =~/[!-"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/","identifier":"binary:\d*"\}\}-!]/ |
