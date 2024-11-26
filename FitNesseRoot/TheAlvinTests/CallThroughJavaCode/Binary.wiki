@@ -73,5 +73,10 @@ ${binaryDefinition}
 }}}
 *!
 !include -seamless .TheAlvinTests.CallThroughJavaCode.Binary.GenericBinary.ValidationType
-!include -seamless .TheAlvinTests.CallThroughJavaCode.Binary.GenericBinary.BinaryTests
+----
+!2 Binary tests
+!include -seamless .TheAlvinTests.CallThroughJavaCode.Binary.SetupTests
 !include -seamless .TheAlvinTests.CallThroughJavaCode.Binary.GenericBinary.ReadTests
+!include -seamless .TheAlvinTests.CallThroughJavaCode.Binary.Data.BinaryDataTests
+!include -seamless .TheAlvinTests.CallThroughJavaCode.Binary.Iiif.IiifTests
+!include -seamless .TheAlvinTests.CallThroughJavaCode.Binary.TeardownTests

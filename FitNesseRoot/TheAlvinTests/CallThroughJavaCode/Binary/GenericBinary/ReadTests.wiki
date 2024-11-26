@@ -1,24 +1,14 @@
 ---
 Static
 ---
-!***< Setup for binary tests 
-!define expectedFileSize {316188}
-
-!define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"TiffImage1.tiff"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
-!define unpublishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"unpublished"}]},{"name":"originalFileName","value":"TiffImage2.tiff"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
-!define hiddenBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"hidden"}]},{"name":"originalFileName","value":"TiffImage3.tiff"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
-
-
-Create three binaries, one for each type of visibility
-!| RecordEndpointFixture |
-| authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
-| $alvinAdminAuthToken | binary | ${publishedBinary} | | CREATED | $publishedRecordId= |
-| $alvinAdminAuthToken | binary | ${unpublishedBinary} | | CREATED | $unpublishedRecordId= |
-| $alvinAdminAuthToken | binary | ${hiddenBinary} | | CREATED | $hiddenRecordId= |
-*!
-
 !3 Read tests
-!***> '''Case 1''' Admin tests
+ * '''Admin'''
+  * '''Case 1a''': An admin should be able to list binaries with any visibility
+  * '''Case 1b''': An admin should be able to read binaries of any visibility
+ * '''Guest'''
+  * '''Case 2a''': A guest should be only able to read published binaries
+
+!***> Admin tests
 !***< Setup admin test case
 !define currentAuthToken {$alvinAdminAuthToken}
 !define recordId {$hiddenRecordId}
@@ -38,7 +28,7 @@ Create three binaries, one for each type of visibility
 | ${currentAuthToken} | binary | $hiddenRecordId | | OK |
 *!
 *!
-!***> '''Case 2''' Guest tests
+!***> Guest tests
 !***< Setup guest test case
 !define currentAuthToken {$guestToken}
 *!
@@ -49,16 +39,4 @@ Create three binaries, one for each type of visibility
 | ${currentAuthToken} | binary | $unpublishedRecordId | | FORBIDDEN |
 | ${currentAuthToken} | binary | $hiddenRecordId | | FORBIDDEN |
 *!
-*!
-
-!***< Clean up binary records
-!| RecordEndpointFixture |
-| authToken | type | id | testDeleteRecord? | getStatusType? |
-| $alvinAdminAuthToken | binary | $publishedRecordId | | OK |
-| $alvinAdminAuthToken | binary | $unpublishedRecordId | | OK |
-| $alvinAdminAuthToken | binary | $hiddenRecordId | | OK |
-
-Reset headers for smartrics fixture
-| Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |
-| restfixture.default.headers | |
 *!

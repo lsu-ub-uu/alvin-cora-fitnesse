@@ -2,7 +2,6 @@ updateList
 updateDoNotCopyOverList
 ErrorLogs/*
 FitNesse
-files
 .svn
 .DS_Store
 desktop.ini
@@ -13,4 +12,4 @@ RecentChanges
 TemplateLibrary
 /RecentChanges.wiki
 /RerunLastFailures*
-/files/testResults/*
+/files/testResults
