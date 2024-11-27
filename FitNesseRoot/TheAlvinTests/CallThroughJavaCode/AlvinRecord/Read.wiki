@@ -18,12 +18,13 @@ Static
 
 ### Expect all 3 records are listed (published, unpunlished and hidden (fitnesse1, fitnesse2 and fitnesse3))
 !define expectedListResult {=~/(?=.*"name":"mainTitle","value":"fitnesse1")(?=.*"name":"mainTitle","value":"fitnesse2")(?=.*"name":"mainTitle","value":"fitnesse3")/}
-!define recordType {alvin-record}
 *!
-!***> '''Case 1''': An admin should be able to list alvin records with any visibility
-!include -seamless .HelperPages.listStoreRecord
+!*** '''Case 1''': An admin should be able to list alvin records with any visibility
+!| ComparerFixture |
+| authToken | type |idToStore| testReadRecordListAndStoreRecordById? |
+| ${currentAuthToken} | alvin-record | $publishedRecord |${expectedListResult}|
 *!
-!***> '''Case 2''': An admin should be able to read any visibility record
+!*** '''Case 2''': An admin should be able to read any visibility record
 !| ChildComparerFixture |
 | authToken | type   | id | testReadAndStoreRecord? | getStatusType? |
 | ${currentAuthToken} | alvin-record | $publishedRecord | | OK |
@@ -40,8 +41,10 @@ Static
 !define expectedSearchResult {(?=.*"name":"mainTitle","value":"fitnesse1")(?!.*"name":"mainTitle","value":"fitnesse2")(?!.*"name":"mainTitle","value":"fitnesse3")}
 !define recordId {$publishedRecord}
 *!
-!***> '''Case 1''': A guest should only be able to search published records
+!*** '''Case 1''': A guest should only be able to search published records
+!***< Setup searchData
 !define alvinRecordSearchData {!-%7B%22name%22%3A%22alvinRecordSearch%22%2C%22children%22%3A%5B%7B%22name%22%3A%22include%22%2C%22children%22%3A%5B%7B%22name%22%3A%22includePart%22%2C%22children%22%3A%5B%7B%22name%22%3A%22alvinRecordSearchTerm%22%2C%22value%22%3A%22**%22%7D%5D%7D%5D%7D%5D%7D-!}
+*!
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
 | setHeader | Accept:application/vnd.uub.recordList+json|
 | GET | /record/searchResult/alvinRecordSearch?searchData=${alvinRecordSearchData} | 200 | | |
@@ -49,7 +52,7 @@ Static
 !| script | ExtractSubstringUsingRegex |
 | ensure | match found using text | $searchResult | and regex | ${expectedSearchResult} |
 *!
-!***> '''Case 2''': A guest should be only able to read published records
+!*** '''Case 2''': A guest should be only able to read published records
 !| ChildComparerFixture |
 | authToken | type   | id | testReadAndStoreRecord? | getStatusType? |
 | ${currentAuthToken} | alvin-record | $publishedRecord | | OK |
