@@ -17,9 +17,9 @@ Static
 !*** '''Case 1''': IIF protocol information must be present for all visibilities as an admin. Information must contain a server and identifier properties. 
 !| ChildComparerFixture |
 | authToken | type |id |testReadAndStoreRecord? |
-| ${currentAuthToken} | binary | $publishedRecordId | =~/[!-"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/","identifier":"binary:\d*"\}\}-!]/ |
-| ${currentAuthToken} | binary | $unpublishedRecordId | =~/[!-"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/","identifier":"binary:\d*"\}\}-!]/ |
-| ${currentAuthToken} | binary | $hiddenRecordId | =~/[!-"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/","identifier":"binary:\d*"\}\}-!]/ |
+| ${currentAuthToken} | binary | $publishedRecordId | =~/"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/?","identifier":"binary:\d*"/ |
+| ${currentAuthToken} | binary | $unpublishedRecordId | =~/"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/?","identifier":"binary:\d*"/ |
+| ${currentAuthToken} | binary | $hiddenRecordId | =~/"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/?","identifier":"binary:\d*"/ |
 *!
 *!
 !***> Guest tests
@@ -30,8 +30,8 @@ Static
 !*** '''Case 1''': IIF protocol information must only be present for published binaries as a guest
 !| ChildComparerFixture |
 | authToken | type | id | testReadAndStoreRecord? |
-| ${currentAuthToken} | binary | $publishedRecordId | =~/[!-"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/","identifier":"binary:\d*"\}\}-!]/ |
-| ${currentAuthToken} | binary | $unpublishedRecordId |=~/!-^(?!.*(iiif).*).+$-!/ |
-| ${currentAuthToken} | binary | $hiddenRecordId |=~/!-^(?!.*(iiif).*).+$-!/ |
+| ${currentAuthToken} | binary | $publishedRecordId | =~/"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/?","identifier":"binary:\d*"/ |
+| ${currentAuthToken} | binary | $unpublishedRecordId |=~/^(?!.*(iiif).*).+$/ |
+| ${currentAuthToken} | binary | $hiddenRecordId |=~/^(?!.*(iiif).*).+$/ |
 *!
 *!
