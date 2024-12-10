@@ -714,7 +714,7 @@ ${alvinRecordRecordTypeDefinition}
 }}}
 ----
 !2 Alvin-record tests
-!include -seamless .TheAlvinTests.CallThroughJavaCode.AlvinRecord.TestEnv.Setup
-!include -seamless .TheAlvinTests.CallThroughJavaCode.AlvinRecord.Definition
-!include -seamless .TheAlvinTests.CallThroughJavaCode.AlvinRecord.Read
-!include -seamless .TheAlvinTests.CallThroughJavaCode.AlvinRecord.TestEnv.Teardown
+!include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.AlvinRecord.TestEnv.Setup
+!include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.AlvinRecord.Definition
+!include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.AlvinRecord.Read
+!include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.AlvinRecord.TestEnv.Teardown

@@ -72,11 +72,11 @@ Metadata group for binary data
 ${binaryDefinition}
 }}}
 *!
-!include -seamless .TheAlvinTests.CallThroughJavaCode.Binary.GenericBinary.ValidationType
+!include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.Binary.GenericBinary.ValidationType
 ----
 !2 Binary tests
-!include -seamless .TheAlvinTests.CallThroughJavaCode.Binary.TestEnv.Setup
-!include -seamless .TheAlvinTests.CallThroughJavaCode.Binary.GenericBinary.Read
-!include -seamless .TheAlvinTests.CallThroughJavaCode.Binary.Data.BinaryData
-!include -seamless .TheAlvinTests.CallThroughJavaCode.Binary.Iiif.Iiif
-!include -seamless .TheAlvinTests.CallThroughJavaCode.Binary.TestEnv.Teardown
+!include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.Binary.TestEnv.Setup
+!include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.Binary.GenericBinary.Read
+!include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.Binary.Data.BinaryData
+!include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.Binary.Iiif.Iiif
+!include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.Binary.TestEnv.Teardown
