@@ -34,11 +34,11 @@ Suite
 !***> Hämta authTokens från idpLogin server
 
 !| IdpLoginServletFixture |
-| EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getValidForNoSeconds? | getDeleteUrl? |
-| userNotInDb@user.uu.se | |  |  | $guestToken= | |  |
-#| fitnesseSystemAdmin@user.uu.se | | |  | $systemAdminAuthToken= | |  |
-#| fitnesseDomainAdminUU@user.uu.se | |  |  | $domainAdminUUAuthToken= | |  |
-#| fitnesseDomainAdminKTH@user.kth.se | | |  | $domainAdminKTHAuthToken= | | |
+| EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getFirstName? | getLastName? | getValidUntil? | getRenewUntil? | getTokenIdUrl? |
+| userNotInDb@user.uu.se | |  |  | $guestToken= | | | | | |
+#| fitnesseSystemAdmin@user.uu.se | | |  | $systemAdminAuthToken= | | | | | |
+#| fitnesseDomainAdminUU@user.uu.se | |  |  | $domainAdminUUAuthToken= | | | | | |
+#| fitnesseDomainAdminKTH@user.kth.se | | |  | $domainAdminKTHAuthToken= | | | | | |
 *!
 
 *!
