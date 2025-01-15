@@ -30,9 +30,9 @@ IdpLogin is in test and production secured by apache and common login systems an
 
 !| IdpLoginServletFixture |
 | EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getFirstName? | getLastName? | getValidUntil? | getRenewUntil? | getTokenIdUrl? |
-| fitnesseAdmin@system.cora.uu.se | | fitnesseAdmin@system.cora.uu.se | OK | $fitnesseAdminAuthToken= | | | | | $fitnesseAdminAuthTokenIdUrl= |
-| fitnesseUser@system.cora.uu.se | | fitnesseUser@system.cora.uu.se | OK | $fitnesseUserAuthToken= | | | | | $fitnesseUserAuthTokenIdUrl= |
-| userNotInDb@user.uu.se | |alvinguest@system.cora.uu.se | OK | $fitnesseGuestAuthToken= | | | | | $fitnesseGuestAuthTokenIdUrl= |
+| fitnesseAdmin@system.cora.uu.se | | fitnesseAdmin@system.cora.uu.se | OK | $fitnesseAdminAuthToken= | someFirstName | someLastName | =~/\d{13}/ | =~/\d{13}/ | $fitnesseAdminAuthTokenIdUrl= |
+| fitnesseUser@system.cora.uu.se | | fitnesseUser@system.cora.uu.se | OK | $fitnesseUserAuthToken= | someFirstName | someLastName | =~/\d{13}/ | =~/\d{13}/ | $fitnesseUserAuthTokenIdUrl= |
+| userNotInDb@user.uu.se | |alvinguest@system.cora.uu.se | OK | $fitnesseGuestAuthToken= | someFirstName | someLastName | =~/\d{13}/ | =~/\d{13}/ | $fitnesseGuestAuthTokenIdUrl= |
 
 *!
 !2 Test with new texts to show that we can use our authToken and be our user
