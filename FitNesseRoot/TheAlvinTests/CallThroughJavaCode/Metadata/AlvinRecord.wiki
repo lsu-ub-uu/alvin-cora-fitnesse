@@ -7,9 +7,8 @@ Bibliographic record in Alvin. MARCXML - record
 !2 Alvin-record record type
 Alvin-record holds the definitions for the bibliographic records in Alvin.
 
-!include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.AlvinRecord.TestEnv.Setup
 !include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.AlvinRecord.Definition
 ----
-!include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.AlvinRecord.Read
+!include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.AlvinRecord.Actions
 ----
 !include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.AlvinRecord.TestEnv.Teardown

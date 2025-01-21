@@ -1,0 +1,6 @@
+---
+Static
+---
+# Records created in Create will also be used for the other Action-tests
+!include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.AlvinRecord.Actions.Create
+!include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.AlvinRecord.Actions.Read

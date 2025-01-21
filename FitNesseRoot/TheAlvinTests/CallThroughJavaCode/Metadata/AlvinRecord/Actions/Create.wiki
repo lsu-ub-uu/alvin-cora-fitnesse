@@ -1,0 +1,47 @@
+---
+Static
+---
+!3 Create tests
+ * '''Admin'''
+  * '''Case 1''': It must be possible to create alvin records
+ * '''Guest'''
+  * '''Case 1''': It must not be possible to create alvin records
+
+!***> Admin tests  
+!***> Case 1: It must be possible to set visibility when creating an alvin record
+!define recordType {alvin-record}
+!define expectedCreateResult {CREATED}
+
+!define alvinRecordPublished {!-{"name":"record","children":[{"name":"typeOfResource","value":"txt"},{"name":"title","children":[{"name":"mainTitle","value":"fitnesse1"}]},{"name":"physicalLocation","children":[{"name":"heldBy","children":[{"name":"location","children":[{"name":"linkedRecordType","value":"alvin-location"},{"name":"linkedRecordId","value":"3"}]}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"recordInfo","children":[{"name":"id","value":"123123"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"record"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvinData"}]}]}]}-!}
+!define alvinRecordUnpublished {!-{"name":"record","children":[{"name":"typeOfResource","value":"txt"},{"name":"title","children":[{"name":"mainTitle","value":"fitnesse2"}]},{"name":"physicalLocation","children":[{"name":"heldBy","children":[{"name":"location","children":[{"name":"linkedRecordType","value":"alvin-location"},{"name":"linkedRecordId","value":"3"}]}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"unpublished"}]},{"name":"recordInfo","children":[{"name":"id","value":"123124"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"record"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvinData"}]}]}]}-!}
+!define alvinRecordHidden {!-{"name":"record","children":[{"name":"typeOfResource","value":"txt"},{"name":"title","children":[{"name":"mainTitle","value":"fitnesse3"}]},{"name":"physicalLocation","children":[{"name":"heldBy","children":[{"name":"location","children":[{"name":"linkedRecordType","value":"alvin-location"},{"name":"linkedRecordId","value":"3"}]}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"hidden"}]},{"name":"recordInfo","children":[{"name":"id","value":"123125"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"record"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvinData"}]}]}]}-!}
+
+!define expectedRecordUnpublished {=~/(?=.*"name":"id","value":"123123")(?=.*"name":"urn","value":"urn:nbn:se:alvin:portal:record-123123")/}
+!define expectedRecordPublished {=~/(?=.*"name":"id","value":"123124")(?=.*"name":"urn","value":"urn:nbn:se:alvin:portal:record-123124")/}
+!define expectedRecordHidden {=~/(?=.*"name":"id","value":"123125")(?=.*"name":"urn","value":"urn:nbn:se:alvin:portal:record-123125")/}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| $alvinAdminAuthToken | ${recordType} | ${alvinRecordPublished} | ${expectedRecordUnpublished} | ${expectedCreateResult} | $publishedRecord= |
+| $alvinAdminAuthToken | ${recordType} | ${alvinRecordUnpublished} | ${expectedRecordPublished} | ${expectedCreateResult} | $unpublishedRecord= |
+| $alvinAdminAuthToken | ${recordType} | ${alvinRecordHidden} | ${expectedRecordHidden} | ${expectedCreateResult} | $hiddenRecord= |
+*!
+
+*!
+!***> Guest tests  
+!***> Case 1: It must not be possible to create alvin records
+!define recordType {alvin-record}
+!define expectedCreateResult {FORBIDDEN}
+!define currentAuthToken {$guestToken}
+
+!define alvinRecordPublished {!-{"name":"record","children":[{"name":"typeOfResource","value":"txt"},{"name":"title","children":[{"name":"mainTitle","value":"fitnesse1"}]},{"name":"physicalLocation","children":[{"name":"heldBy","children":[{"name":"location","children":[{"name":"linkedRecordType","value":"alvin-location"},{"name":"linkedRecordId","value":"3"}]}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"recordInfo","children":[{"name":"id","value":"123123"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"record"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvinData"}]}]}]}-!}
+!define alvinRecordUnpublished {!-{"name":"record","children":[{"name":"typeOfResource","value":"txt"},{"name":"title","children":[{"name":"mainTitle","value":"fitnesse2"}]},{"name":"physicalLocation","children":[{"name":"heldBy","children":[{"name":"location","children":[{"name":"linkedRecordType","value":"alvin-location"},{"name":"linkedRecordId","value":"3"}]}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"unpublished"}]},{"name":"recordInfo","children":[{"name":"id","value":"123124"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"record"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvinData"}]}]}]}-!}
+!define alvinRecordHidden {!-{"name":"record","children":[{"name":"typeOfResource","value":"txt"},{"name":"title","children":[{"name":"mainTitle","value":"fitnesse3"}]},{"name":"physicalLocation","children":[{"name":"heldBy","children":[{"name":"location","children":[{"name":"linkedRecordType","value":"alvin-location"},{"name":"linkedRecordId","value":"3"}]}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"hidden"}]},{"name":"recordInfo","children":[{"name":"id","value":"123125"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"record"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvinData"}]}]}]}-!}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| ${currentAuthToken} | ${recordType} | ${alvinRecordPublished} | | ${expectedCreateResult} | |
+| ${currentAuthToken} | ${recordType} | ${alvinRecordUnpublished} | | ${expectedCreateResult} | |
+| ${currentAuthToken} | ${recordType} | ${alvinRecordHidden} | | ${expectedCreateResult} | |
+*!
+*!
