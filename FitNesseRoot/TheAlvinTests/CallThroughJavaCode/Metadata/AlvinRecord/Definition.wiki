@@ -705,9 +705,11 @@ Static
 				label (textVariable, 0-1, noConstraint)
 				fileLocation (recordLink, 1-1, noConstraint)-!}
 *!
+!*** '''Definition for binary'''
 {{{
 ${alvinRecordRecordTypeDefinition}
 }}}
+*!
 !3 Definition test 
 !5 !style_red[''Disabled until stable definition is reached'']
 #!***> AlvinRecord definition test
