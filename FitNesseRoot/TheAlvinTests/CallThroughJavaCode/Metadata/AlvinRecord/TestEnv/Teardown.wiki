@@ -9,4 +9,5 @@ Static
 | DELETE | /record/alvin-record/$publishedRecord | 200 | | |
 | DELETE | /record/alvin-record/$unpublishedRecord | 200 | | |
 | DELETE | /record/alvin-record/$hiddenRecord | 200 | | |
+| DELETE | /record/alvin-record/$urnRecord | 200 | | |
 *!

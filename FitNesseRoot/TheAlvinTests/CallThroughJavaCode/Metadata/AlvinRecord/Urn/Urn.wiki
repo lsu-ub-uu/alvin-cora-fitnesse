@@ -1,0 +1,46 @@
+---
+Static
+---
+!3 URN tests
+  * '''Case 1''': An alvin-record must have a URN number matching it's ID after creation
+  * '''Case 2''': It must not be possible to manually change the URN number
+  * '''Case 3''': It must not be possible to delete the URN number
+
+!***> Case 1: An alvin-record must have a URN number matching it's ID after creation
+!define recordType {alvin-record}
+!define expectedCreateResult {CREATED}
+
+!define alvinRecordWithUrn {!-{"name":"record","children":[{"name":"typeOfResource","value":"txt"},{"name":"title","children":[{"name":"mainTitle","value":"fitnesseUrnTest"}]},{"name":"physicalLocation","children":[{"name":"heldBy","children":[{"name":"location","children":[{"name":"linkedRecordType","value":"alvin-location"},{"name":"linkedRecordId","value":"3"}]}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"recordInfo","children":[{"name":"id","value":"234234"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"record"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvinData"}]}]}]}-!}
+
+!define expectedAlvinRecordWithUrn {=~/(?=.*"name":"id","value":"234234")(?=.*"name":"urn","value":"urn:nbn:se:alvin:portal:record-234234")/}
+
+!| ChildComparerFixture |
+| authToken | type | json | testCreateAndStoreRecord? | getStatusType? | getCreatedId? |
+| $alvinAdminAuthToken | ${recordType} | ${alvinRecordWithUrn} | ${expectedAlvinRecordWithUrn} | ${expectedCreateResult} | $urnRecord= |
+
+*!
+!***> Case 2: It must not be possible to manually update the URN number
+!define recordType {alvin-record}
+!define expectedUpdateResult {OK}
+
+!define alvinUpdateRecordWithUrn {!-{"name":"record","children":[{"name":"typeOfResource","value":"txt"},{"name":"title","children":[{"name":"mainTitle","value":"updatedFitnesseUrnTest"}]},{"name":"physicalLocation","children":[{"name":"heldBy","children":[{"name":"location","children":[{"name":"linkedRecordType","value":"alvin-location"},{"name":"linkedRecordId","value":"3"}]}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"234234"},{"name":"urn","value":"urn:nbn:se:alvin:portal:record-000001"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"alvin-record"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"record"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvinData"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"151515"}]},{"name":"tsCreated","value":"2025-01-22T10:01:49.797866Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"151515"}]},{"name":"tsUpdated","value":"2025-01-22T10:01:49.797866Z"}]}]}]}-!}
+
+!define expectedAlvinRecordWithUrn {=~/(?=.*"name":"mainTitle","value":"updatedFitnesseUrnTest")(?=.*"name":"id","value":"234234")(?=.*"name":"urn","value":"urn:nbn:se:alvin:portal:record-234234")/}
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $alvinAdminAuthToken | ${recordType} | $urnRecord | ${alvinUpdateRecordWithUrn} | ${expectedAlvinRecordWithUrn} | ${expectedUpdateResult} |
+
+*!
+!***> Case 3: It must not be possible to delete the URN number
+!define recordType {alvin-record}
+!define expectedUpdateResult {OK}
+
+!define alvinUpdateRecordWithUrn {!-{"name":"record","children":[{"name":"typeOfResource","value":"txt"},{"name":"title","children":[{"name":"mainTitle","value":"testDeleteUrn"}]},{"name":"physicalLocation","children":[{"name":"heldBy","children":[{"name":"location","children":[{"name":"linkedRecordType","value":"alvin-location"},{"name":"linkedRecordId","value":"3"}]}]}]},{"name":"adminInfo","children":[{"name":"visibility","value":"published"}]},{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"234234"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"alvin-record"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"record"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvinData"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"151515"}]},{"name":"tsCreated","value":"2025-01-22T10:01:49.797866Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"151515"}]},{"name":"tsUpdated","value":"2025-01-22T10:01:49.797866Z"}]}]}]}-!}
+
+!define expectedAlvinRecordWithUrn {=~/(?=.*"name":"mainTitle","value":"testDeleteUrn")(?=.*"name":"id","value":"234234")(?=.*"name":"urn","value":"urn:nbn:se:alvin:portal:record-234234")/}
+
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
+| $alvinAdminAuthToken | ${recordType} | $urnRecord | ${alvinUpdateRecordWithUrn} | ${expectedAlvinRecordWithUrn} | ${expectedUpdateResult} |
+*!
