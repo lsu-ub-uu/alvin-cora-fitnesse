@@ -34,7 +34,7 @@ Suite
 !***> Hämta authTokens från idpLogin server
 
 !| IdpLoginServletFixture |
-| EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getFirstName? | getLastName? | getValidUntil? | getRenewUntil? | getTokenIdUrl? |
+| EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getFirstName? | getLastName? | getValidUntil? | getRenewUntil? | getDeleteUrl? |
 | userNotInDb@user.uu.se | |  |  | $guestToken= | | | | | |
 #| fitnesseSystemAdmin@user.uu.se | | |  | $systemAdminAuthToken= | | | | | |
 #| fitnesseDomainAdminUU@user.uu.se | |  |  | $domainAdminUUAuthToken= | | | | | |

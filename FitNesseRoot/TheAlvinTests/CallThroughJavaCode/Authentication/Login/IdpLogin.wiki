@@ -29,10 +29,10 @@ IdpLogin is in test and production secured by apache and common login systems an
 !***> Get authTokens from idpLogin server
 
 !| IdpLoginServletFixture |
-| EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getFirstName? | getLastName? | getValidUntil? | getRenewUntil? | getTokenIdUrl? |
-| fitnesseAdmin@system.cora.uu.se | | fitnesseAdmin@system.cora.uu.se | OK | $fitnesseAdminAuthToken= | someFirstName | someLastName | =~/\d{13}/ | =~/\d{13}/ | $fitnesseAdminAuthTokenIdUrl= |
-| fitnesseUser@system.cora.uu.se | | fitnesseUser@system.cora.uu.se | OK | $fitnesseUserAuthToken= | someFirstName | someLastName | =~/\d{13}/ | =~/\d{13}/ | $fitnesseUserAuthTokenIdUrl= |
-| userNotInDb@user.uu.se | |alvinguest@system.cora.uu.se | OK | $fitnesseGuestAuthToken= | someFirstName | someLastName | =~/\d{13}/ | =~/\d{13}/ | $fitnesseGuestAuthTokenIdUrl= |
+| EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getFirstName? | getLastName? | getValidUntil? | getRenewUntil? | getDeleteUrl? |
+| fitnesseAdmin@system.cora.uu.se | | fitnesseAdmin@system.cora.uu.se | OK | $fitnesseAdminAuthToken= | someFirstName | someLastName | =~/\d{13}/ | =~/\d{13}/ | $fitnesseAdminAuthTokenDeleteUrl= |
+| fitnesseUser@system.cora.uu.se | | fitnesseUser@system.cora.uu.se | OK | $fitnesseUserAuthToken= | someFirstName | someLastName | =~/\d{13}/ | =~/\d{13}/ | $fitnesseUserAuthTokenDeleteUrl= |
+| userNotInDb@user.uu.se | |alvinguest@system.cora.uu.se | OK | $fitnesseGuestAuthToken= | someFirstName | someLastName | =~/\d{13}/ | =~/\d{13}/ | $fitnesseGuestAuthTokenDeleteUrl= |
 
 *!
 !2 Test with new texts to show that we can use our authToken and be our user
@@ -46,8 +46,8 @@ IdpLogin is in test and production secured by apache and common login systems an
 
 !| AppTokenEndpointFixture |
 | authTokenToLogOut | deleteUrl | removeAuthTokenForUser? | getStatusType? |
-| $fitnesseUserAuthToken | $fitnesseUserAuthTokenIdUrl| | OK |
-| $fitnesseGuestAuthToken | $fitnesseGuestAuthTokenIdUrl| | OK |
+| $fitnesseUserAuthToken | $fitnesseUserAuthTokenDeleteUrl| | OK |
+| $fitnesseGuestAuthToken | $fitnesseGuestAuthTokenDeleteUrl| | OK |
 
 *!
 !2 Test with new texts to show that authToken is not valid after logout
@@ -67,5 +67,5 @@ IdpLogin is in test and production secured by apache and common login systems an
 
 !| AppTokenEndpointFixture |
 | authTokenToLogOut | deleteUrl | removeAuthTokenForUser? | getStatusType? |
-| $fitnesseAdminAuthToken | $fitnesseAdminAuthTokenIdUrl| | OK |
+| $fitnesseAdminAuthToken | $fitnesseAdminAuthTokenDeleteUrl| | OK |
 *!
