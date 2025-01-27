@@ -1,8 +1,6 @@
 ---
 Static
 ---
-
-----
 !3 Iiif tests
  * '''Admin'''
   * '''Case 1''': IIF protocol information must be present for all visibilities as an admin. Information must contain a server and identifier properties. 

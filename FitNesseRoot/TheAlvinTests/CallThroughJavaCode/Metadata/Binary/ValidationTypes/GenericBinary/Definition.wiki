@@ -67,14 +67,24 @@ Static
 		height (numberVariable, 1-1, noConstraint)
 		width (numberVariable, 1-1, noConstraint)-!}
 *!
-!4 Generic Binary validation type
+!4 Generic Binary validation types
 !***> '''Definition for new'''
 {{{
 ${genericBinaryNewGroupDefinition}
 }}}
+!***> genericBinaryNewGroup definition test
+!| DefinitionCompareFixture |
+| authToken | recordId | getDefinitionView? |
+| $adminAuthToken | genericBinaryNewGroup | ${genericBinaryNewGroupDefinition} |
+*!
 *!
 !***> '''Definition for update'''
 {{{
 ${genericBinaryUpdateGroupDefinition}
 }}}
+!***> genericBinaryUpdateGroup definition test 
+!| DefinitionCompareFixture |
+| authToken | recordId | getDefinitionView? |
+| $adminAuthToken | genericBinaryUpdateGroup | ${genericBinaryUpdateGroupDefinition} |
+*!
 *!

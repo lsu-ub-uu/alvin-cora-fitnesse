@@ -1,8 +1,6 @@
 ---
 Static
 ---
-
-----
 !3 Read binary data tests
  * '''Admin'''
   * '''Case 1''': An admin should be able to read binary data of any visibility
