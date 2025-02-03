@@ -23,15 +23,16 @@ IdpLogin is in test and production secured by apache and common login systems an
 !| AppTokenEndpointFixture |
 | loginId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
 | fitnesseAdmin@system.cora.uu.se | | | $adminAuthToken= | CREATED |
+*!
 
 !2 Fetch authTokens using idpLogin
 !***> Get authTokens from idpLogin server
 
 !| IdpLoginServletFixture |
-| EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getValidForNoSeconds? | getDeleteUrl? |
-| fitnesseAdmin@system.cora.uu.se | | fitnesseAdmin@system.cora.uu.se | OK | $fitnesseAdminAuthToken= | | $fitnesseAdminAuthTokenDeleteUrl= |
-| fitnesseUser@system.cora.uu.se | | fitnesseUser@system.cora.uu.se | OK | $fitnesseUserAuthToken= | | $fitnesseUserAuthTokenDeleteUrl= |
-| userNotInDb@user.uu.se | |alvinguest@system.cora.uu.se | OK | $fitnesseGuestAuthToken= | | $fitnesseGuestAuthTokenDeleteUrl= |
+| EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getFirstName? | getLastName? | getValidUntil? | getRenewUntil? | getDeleteUrl? |
+| fitnesseAdmin@system.cora.uu.se | | fitnesseAdmin@system.cora.uu.se | OK | $fitnesseAdminAuthToken= | someFirstName | someLastName | =~/\d{13}/ | =~/\d{13}/ | $fitnesseAdminAuthTokenDeleteUrl= |
+| fitnesseUser@system.cora.uu.se | | fitnesseUser@system.cora.uu.se | OK | $fitnesseUserAuthToken= | someFirstName | someLastName | =~/\d{13}/ | =~/\d{13}/ | $fitnesseUserAuthTokenDeleteUrl= |
+| userNotInDb@user.uu.se | |alvinguest@system.cora.uu.se | OK | $fitnesseGuestAuthToken= | someFirstName | someLastName | =~/\d{13}/ | =~/\d{13}/ | $fitnesseGuestAuthTokenDeleteUrl= |
 
 *!
 !2 Test with new texts to show that we can use our authToken and be our user
