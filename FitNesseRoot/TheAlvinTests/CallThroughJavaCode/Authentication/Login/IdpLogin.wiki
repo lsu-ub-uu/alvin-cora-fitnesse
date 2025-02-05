@@ -6,33 +6,16 @@ Test
 #| import |
 #| se.uu.ub.cora.fitnesseintegration |
 
-#!| script | SystemUrl |
-#| setUrl | ${systemUnderTestUrl} |
-#| setAppTokenVerifierUrl | ${appTokenVerifierUrl} |
-#| setIdpLoginUrl | ${idpLoginUrl} |
-#| setGatekeeperServerUrl | ${gatekeeperServerUrl} |
-
-#!| script | DependencyProvider |
-#| setHttpHandlerFactoryClassName | se.uu.ub.cora.httphandler.HttpHandlerFactoryImp |
-#| setJsonToDataFactoryClassName | se.uu.ub.cora.clientdata.converter.jsontojava.JsonToDataConverterFactoryImp |
-
 !1 !-IdpLoginTest-!
 IdpLogin is in test and production secured by apache and common login systems and can not be accessed without a successful login into the local idp. We are expecting the parameter eppn to be present when the user is allowed past apache and can access the idpLogin server. This eppn sent on to gatekeeperServer that looks for a user in the database with a matching eppn. Gatekeeper returns an authtoken for the user, and stores the user in the currently logged in users under the returned authtoken. If no user is found for an eppn an authtoken is created for and returned for the guest user.
 
-!***> Login for fitnesse admin
-!| AppTokenEndpointFixture |
-| loginId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
-| fitnesseAdmin@system.cora.uu.se | | | $adminAuthToken= | CREATED |
-*!
-
 !2 Fetch authTokens using idpLogin
 !***> Get authTokens from idpLogin server
-
-!| IdpLoginServletFixture |
-| EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getFirstName? | getLastName? | getValidUntil? | getRenewUntil? | getDeleteUrl? |
-| fitnesseAdmin@system.cora.uu.se | | fitnesseAdmin@system.cora.uu.se | OK | $fitnesseAdminAuthToken= | someFirstName | someLastName | =~/\d{13}/ | =~/\d{13}/ | $fitnesseAdminAuthTokenDeleteUrl= |
-| fitnesseUser@system.cora.uu.se | | fitnesseUser@system.cora.uu.se | OK | $fitnesseUserAuthToken= | someFirstName | someLastName | =~/\d{13}/ | =~/\d{13}/ | $fitnesseUserAuthTokenDeleteUrl= |
-| userNotInDb@user.uu.se | |alvinguest@system.cora.uu.se | OK | $fitnesseGuestAuthToken= | someFirstName | someLastName | =~/\d{13}/ | =~/\d{13}/ | $fitnesseGuestAuthTokenDeleteUrl= |
+!| AuthenticationFixture |
+| idpLogin? | EPPN | getLoginId? | getAuthToken? | getDeleteUrl? | getStatusType? |
+| | fitnesseAdmin@system.cora.uu.se | fitnesseAdmin@system.cora.uu.se | $fitnesseAdminAuthToken= | $fitnesseAdminAuthTokenDeleteUrl= | OK |
+| | fitnesseUser@system.cora.uu.se | fitnesseUser@system.cora.uu.se | $fitnesseUserAuthToken= | $fitnesseUserAuthTokenDeleteUrl= | OK |
+| | userNotInDb@user.uu.se | alvinguest@system.cora.uu.se | $fitnesseGuestAuthToken= | $fitnesseGuestAuthTokenDeleteUrl= | OK |
 
 *!
 !2 Test with new texts to show that we can use our authToken and be our user
@@ -43,11 +26,10 @@ IdpLogin is in test and production secured by apache and common login systems an
 | $fitnesseUserAuthToken | text | {"name":"text","children":[{"name":"recordInfo","children":[{"name":"id","value":"myAuthText"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"textSystemOne"}]},{"children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"cora"}],"name":"dataDivider"}]},{"name":"textPart","attributes":{"type":"default","lang":"sv"} ,"children":[{"name":"text","value":"Min svenska text"}]}]} | =~/"name":"linkedRecordId",\s*"value":"121212"/ | CREATED |
 *!
 !***> Logout
-
-!| AppTokenEndpointFixture |
-| authTokenToLogOut | deleteUrl | removeAuthTokenForUser? | getStatusType? |
-| $fitnesseUserAuthToken | $fitnesseUserAuthTokenDeleteUrl| | OK |
-| $fitnesseGuestAuthToken | $fitnesseGuestAuthTokenDeleteUrl| | OK |
+!| AuthenticationFixture |
+| deleteAuthToken? | existingAuthToken | authTokenDeleteUrl | getStatusType? |
+| | $fitnesseUserAuthToken | $fitnesseUserAuthTokenDeleteUrl | OK |
+| | $fitnesseGuestAuthToken | $fitnesseGuestAuthTokenDeleteUrl | OK |
 
 *!
 !2 Test with new texts to show that authToken is not valid after logout
@@ -65,7 +47,7 @@ IdpLogin is in test and production secured by apache and common login systems an
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $fitnesseAdminAuthToken | text | myAuthText | | OK |
 
-!| AppTokenEndpointFixture |
-| authTokenToLogOut | deleteUrl | removeAuthTokenForUser? | getStatusType? |
-| $fitnesseAdminAuthToken | $fitnesseAdminAuthTokenDeleteUrl| | OK |
+!| AuthenticationFixture |
+| deleteAuthToken? | existingAuthToken | authTokenDeleteUrl | getStatusType? |
+| | $fitnesseAdminAuthToken | $fitnesseAdminAuthTokenDeleteUrl | OK |
 *!
