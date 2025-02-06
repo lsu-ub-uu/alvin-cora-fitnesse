@@ -6,25 +6,21 @@ Suite
 
 !***> Login for admin
 !***> Create alvin authTokens
-!| AppTokenEndpointFixture |
-| loginId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
-| alvinAdmin@cora.epc.ub.uu.se | a50ca087-a3f5-4393-b2bb-315436d3c3be | | $alvinAdminAuthToken= |  |
-| alvinUser@cora.epc.ub.uu.se | 39291112-aff2-4929-b201-515720693722 | | $alvinUserAuthToken= |  |
+!| AuthenticationFixture |
+| appTokenLogin? | loginId | appToken | getAuthToken? | getStatusType? |
+| | alvinAdmin@cora.epc.ub.uu.se | a50ca087-a3f5-4393-b2bb-315436d3c3be | $alvinAdminAuthToken= | CREATED |
+| | fitnesseAdmin@system.cora.uu.se | | $adminAuthToken= | CREATED |
 *!
-
-!| AppTokenEndpointFixture |
-| loginId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
-| fitnesseAdmin@system.cora.uu.se | | | $adminAuthToken= | CREATED |
 
 *!
 !| script | AuthTokenHolder |
 | setAdminAuthToken | $adminAuthToken |
 
 !***> Login for user
-
-!| AppTokenEndpointFixture |
-| loginId | appToken | getAuthTokenForAppToken? | getAuthToken? | getStatusType? |
-| fitnesseUser@system.cora.uu.se | | | $userAuthToken= | CREATED |
+!| AuthenticationFixture |
+| appTokenLogin? | loginId | appToken | getAuthToken? | getStatusType? |
+| | alvinUser@cora.epc.ub.uu.se | 39291112-aff2-4929-b201-515720693722 | $alvinUserAuthToken= | CREATED |
+| | fitnesseUser@system.cora.uu.se  | | $userAuthToken= | CREATED |
 
 *!
 !| script | AuthTokenHolder |
@@ -32,13 +28,9 @@ Suite
 
 !2 Login for Alvin example users
 !***> Hämta authTokens från idpLogin server
-
-!| IdpLoginServletFixture |
-| EPPN | getAuthTokenForEPPN? | getLoginId? | getResponseCode? | getAuthToken? | getFirstName? | getLastName? | getValidUntil? | getRenewUntil? | getDeleteUrl? |
-| userNotInDb@user.uu.se | |  |  | $guestToken= | | | | | |
-#| fitnesseSystemAdmin@user.uu.se | | |  | $systemAdminAuthToken= | | | | | |
-#| fitnesseDomainAdminUU@user.uu.se | |  |  | $domainAdminUUAuthToken= | | | | | |
-#| fitnesseDomainAdminKTH@user.kth.se | | |  | $domainAdminKTHAuthToken= | | | | | |
+!| AuthenticationFixture |
+| idpLogin? | EPPN | getAuthToken? | getStatusType? |
+| | userNotInDb@user.uu.se | $guestToken= | OK |
 *!
 
 *!
