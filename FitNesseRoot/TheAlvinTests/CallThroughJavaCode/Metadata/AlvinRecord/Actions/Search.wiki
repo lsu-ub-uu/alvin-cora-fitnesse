@@ -1,0 +1,46 @@
+---
+Static
+---
+!3 Search tests
+ * '''Admin'''
+  * '''Case 1''': An admin should be able to search alvin records with any visibility
+ * '''Guest'''
+  * '''Case 1''': A guest should only be able to search published records
+
+!***< Setup searchData
+!define alvinRecordSearchData {!-%7B%22name%22%3A%22alvinRecordSearch%22%2C%22children%22%3A%5B%7B%22name%22%3A%22include%22%2C%22children%22%3A%5B%7B%22name%22%3A%22includePart%22%2C%22children%22%3A%5B%7B%22name%22%3A%22alvinRecordSearchTerm%22%2C%22value%22%3A%22**%22%7D%5D%7D%5D%7D%5D%7D-!}
+*!
+
+!***> Admin tests
+!***< Setup admin test case
+!define currentAuthToken {$alvinAdminAuthToken}
+
+### Expect all 3 records are listed (published, unpunlished and hidden (fitnesse1, fitnesse2 and fitnesse3))
+!define expectedAdminSearchResult {(?=.*"name":"mainTitle","value":"fitnesse1")(?=.*"name":"mainTitle","value":"fitnesse2")(?=.*"name":"mainTitle","value":"fitnesse3").*}
+*!
+!*** '''Case 1''': An admin should be able to list alvin records with any visibility
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
+| setHeader | Accept:application/vnd.uub.recordList+json!-
+-!authToken:$alvinAdminAuthToken!-|
+| GET | /record/searchResult/alvinRecordSearch?searchData=${alvinRecordSearchData} | 200 | | $adminSearchResult= |
+
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $adminSearchResult | and regex | ${expectedAdminSearchResult} |
+*!
+*!
+!***> Guest tests
+!***< Setup guest test case
+!define currentAuthToken {$guestToken}
+
+### Expect only 1 record is listed (published (fitnesse1) and the others are not listed (unpublished and hidden (fitnesse2 and fitnesse3)).
+!define expectedGuestSearchResult {(?=.*"name":"mainTitle","value":"fitnesse1")(?!.*"name":"mainTitle","value":"fitnesse2")(?!.*"name":"mainTitle","value":"fitnesse3")}
+*!
+!*** '''Case 1''': A guest should only be able to search published records
+!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
+| setHeader | Accept:application/vnd.uub.recordList+json|
+| GET | /record/searchResult/alvinRecordSearch?searchData=${alvinRecordSearchData} | 200 | | $guestSearchResult= |
+
+!| script | ExtractSubstringUsingRegex |
+| ensure | match found using text | $guestSearchResult | and regex | ${expectedGuestSearchResult} |
+*!
+*!

@@ -12,5 +12,3 @@ Alvin-record holds the definitions for the bibliographic records in Alvin.
 !include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.AlvinRecord.Actions
 ----
 !include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.AlvinRecord.Urn.Urn
-----
-!include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.AlvinRecord.TestEnv.Teardown

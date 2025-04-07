@@ -7,13 +7,6 @@ The Binary record type is used to manage binary data files.
 !2 Binary record type
 Metadata group for binary data
 
-!include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.Binary.TestEnv.Setup
-!include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.Binary.Definition
-----
-!include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.Binary.ValidationTypes
-----
 !include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.Binary.Data.BinaryData
 ----
 !include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.Binary.Iiif.Iiif
-----
-!include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.Binary.TestEnv.Teardown

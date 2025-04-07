@@ -1,5 +1,0 @@
----
-Static
----
-!2 Validation types for binary
-!include -seamless .TheAlvinTests.CallThroughJavaCode.Metadata.Binary.ValidationTypes.GenericBinary
