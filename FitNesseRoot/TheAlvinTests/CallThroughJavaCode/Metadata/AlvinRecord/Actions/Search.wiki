@@ -20,7 +20,7 @@ Static
 *!
 !*** '''Case 1''': An admin should be able to list alvin records with any visibility
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
-| setHeader | Accept:application/vnd.uub.recordList+json!-
+| setHeader | Accept:application/vnd.cora.recordList+json!-
 -!authToken:$alvinAdminAuthToken!-|
 | GET | /record/searchResult/alvinRecordSearch?searchData=${alvinRecordSearchData} | 200 | | $adminSearchResult= |
 
@@ -37,7 +37,7 @@ Static
 *!
 !*** '''Case 1''': A guest should only be able to search published records
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
-| setHeader | Accept:application/vnd.uub.recordList+json|
+| setHeader | Accept:application/vnd.cora.recordList+json|
 | GET | /record/searchResult/alvinRecordSearch?searchData=${alvinRecordSearchData} | 200 | | $guestSearchResult= |
 
 !| script | ExtractSubstringUsingRegex |
