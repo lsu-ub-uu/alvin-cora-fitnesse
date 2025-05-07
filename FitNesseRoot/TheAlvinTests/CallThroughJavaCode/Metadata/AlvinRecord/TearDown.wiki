@@ -3,9 +3,7 @@ Static
 ---
 !***< Clean up READ test data
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
-| setHeader | Accept:application/vnd.cora.record+json!-
--!Content-Type:application/vnd.cora.record+json!-
--!authToken:$alvinAdminAuthToken |
+| setHeader | authToken:$alvinAdminAuthToken |
 | DELETE | /record/alvin-record/$publishedRecord | 200 | | |
 | DELETE | /record/alvin-record/$unpublishedRecord | 200 | | |
 | DELETE | /record/alvin-record/$hiddenRecord | 200 | | |
