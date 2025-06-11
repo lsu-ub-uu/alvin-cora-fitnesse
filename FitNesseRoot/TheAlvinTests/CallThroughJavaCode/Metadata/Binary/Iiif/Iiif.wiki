@@ -8,7 +8,7 @@ Static
   * '''Case 1''': IIF protocol information must ''only'' be present for published binaries as a guest
 
 !***> Admin tests
-!***< Setup admin test case
+!***> Setup admin test case
 !define currentAuthToken {$alvinAdminAuthToken}
 *!
 
@@ -21,7 +21,7 @@ Static
 *!
 *!
 !***> Guest tests
-!***< Setup guest test case
+!***> Setup guest test case
 !define currentAuthToken {$guestToken}
 *!
 

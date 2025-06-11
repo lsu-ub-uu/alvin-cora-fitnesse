@@ -8,12 +8,12 @@ Static
   * '''Case 1''': A guest should be only able to read published binary data
 
 !***> Admin tests
-!***< Setup admin test case
+!***> Setup admin test case
 !define currentAuthToken {$alvinAdminAuthToken}
 *!
 !*** '''Case 1''': An admin should be able to read binary data of any visibility
 !5 '''Read published'''
-!***< Setup defines
+!***> Setup defines
 !define recordId {$publishedRecordId}
 !define expectedDownloadAnswer {}
 !define expectedDownloadStatus {OK}
@@ -27,7 +27,7 @@ Static
 | ${currentAuthToken} | binary | ${recordId} | jp2 | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
 
 !5 '''Read unpublished'''
-!***< Setup unpublished
+!***> Setup unpublished
 !define recordId {$unpublishedRecordId}
 *!
 !| DownloadFixture |
@@ -39,7 +39,7 @@ Static
 | ${currentAuthToken} | binary | ${recordId} | jp2 | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
 
 !5 '''Read hidden'''
-!***< Setup hidden
+!***> Setup hidden
 !define recordId {$hiddenRecordId}
 *!
 !| DownloadFixture |
@@ -52,12 +52,12 @@ Static
 *!
 *!
 !***> Guest tests
-!***< Setup guest test case
+!***> Setup guest test case
 !define currentAuthToken {$guestToken}
 *!
 !*** '''Case 1''': A guest should be only able to read published binary data
 !5 '''Read published'''
-!***< Setup published
+!***> Setup published
 !define recordId {$publishedRecordId}
 !define expectedDownloadStatus {OK}
 *!
@@ -70,7 +70,7 @@ Static
 | ${currentAuthToken} | binary | ${recordId} | jp2 | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
 
 !5 '''Read unpublished'''
-!***< Setup unpublished
+!***> Setup unpublished
 !define recordId {$unpublishedRecordId}
 !define expectedDownloadStatus {FORBIDDEN}
 *!
@@ -83,7 +83,7 @@ Static
 | ${currentAuthToken} | binary | ${recordId} | jp2 | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
 
 !5 '''Read hidden'''
-!***< Setup hidden
+!***> Setup hidden
 !define recordId {$hiddenRecordId}
 !define expectedDownloadStatus {FORBIDDEN}
 *!

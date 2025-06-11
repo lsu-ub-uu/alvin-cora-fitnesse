@@ -7,12 +7,12 @@ Static
  * '''Guest'''
   * '''Case 1''': A guest should only be able to search published records
 
-!***< Setup searchData
+!***> Setup searchData
 !define alvinRecordSearchData {!-%7B%22name%22%3A%22alvinRecordSearch%22%2C%22children%22%3A%5B%7B%22name%22%3A%22include%22%2C%22children%22%3A%5B%7B%22name%22%3A%22includePart%22%2C%22children%22%3A%5B%7B%22name%22%3A%22alvinRecordSearchTerm%22%2C%22value%22%3A%22**%22%7D%5D%7D%5D%7D%5D%7D-!}
 *!
 
 !***> Admin tests
-!***< Setup admin test case
+!***> Setup admin test case
 !define currentAuthToken {$alvinAdminAuthToken}
 
 ### Expect all 3 records are listed (published, unpunlished and hidden (fitnesse1, fitnesse2 and fitnesse3))
@@ -29,7 +29,7 @@ Static
 *!
 *!
 !***> Guest tests
-!***< Setup guest test case
+!***> Setup guest test case
 !define currentAuthToken {$guestToken}
 
 ### Expect only 1 record is listed (published (fitnesse1) and the others are not listed (unpublished and hidden (fitnesse2 and fitnesse3)).

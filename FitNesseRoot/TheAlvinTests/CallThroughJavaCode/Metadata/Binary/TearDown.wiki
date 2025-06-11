@@ -2,7 +2,7 @@
 Static
 ---
 
-!***< Clean up binary records
+!***> Clean up binary records
 !| RecordEndpointFixture |
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $alvinAdminAuthToken | binary | $publishedRecordId | | OK |

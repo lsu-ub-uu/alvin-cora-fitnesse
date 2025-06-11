@@ -1,7 +1,7 @@
 ---
 Static
 ---
-!***< Setup for binary tests
+!***> Setup for binary tests
  
 ### Setup binary record
 !define expectedFileSize {316188}

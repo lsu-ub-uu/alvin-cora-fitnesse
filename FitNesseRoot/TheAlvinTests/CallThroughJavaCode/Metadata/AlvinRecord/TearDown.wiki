@@ -1,7 +1,7 @@
 ---
 Static
 ---
-!***< Clean up READ test data
+!***> Clean up READ test data
 !| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
 | setHeader | authToken:$alvinAdminAuthToken |
 | DELETE | /record/alvin-record/$publishedRecord | 200 | | |

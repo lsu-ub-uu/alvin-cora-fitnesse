@@ -2,7 +2,7 @@
 Static
 ---
 !3 Definition for alvin-record
-!***< Setup alvin-record definition
+!***> Setup alvin-record definition
 !define alvinRecordRecordTypeDefinition {!-record (group)
 	typeOfResource (collectionVariable, 1-1, noConstraint, I)
 	collection (collectionVariable, 0-1, noConstraint, I)
