@@ -13,4 +13,6 @@ Login tests ensure that the IDP login behaves as expected.
 
 FitNesse also provides tools to edit, organize, and run these tests directly in the system.
 
+TheAlvinTests
+
 !note FitNesse ${FITNESSE_VERSION}
