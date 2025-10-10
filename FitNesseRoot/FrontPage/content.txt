@@ -1,7 +1,16 @@
-!1 Acceptance tests and documentation for Alvin
+Acceptance tests and documentation for Alvin
 
-The Alvin Tests page on FitNesse is a comprehensive test suite for the Cora system. The test suite contains various tests that are organized into categories and subcategories. It includes tests that call Java code directly, tests for location management, tests for metadata, and tests for login. Specific tests include functions such as creating, reading, updating and deleting locations, as well as handling metadata and different types of records. The login tests verify that the IDP login works as expected. The FitNesse platform also offers tools to edit, organize and run the tests directly in the system.
+The Alvin Tests page on FitNesse is a comprehensive test suite for the Cora system.
+The suite is organized into categories and subcategories, and includes tests that:
 
-TheAlvinTests
+    Call Java code directly
+    Manage locations
+    Handle metadata
+    Test login functionality 
+
+Specific tests cover creating, reading, updating, and deleting locations, as well as verifying that metadata and record types work correctly.
+Login tests ensure that the IDP login behaves as expected.
+
+FitNesse also provides tools to edit, organize, and run these tests directly in the system.
 
 !note FitNesse ${FITNESSE_VERSION}
