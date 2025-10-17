@@ -6,15 +6,14 @@ Static
 ### Setup binary record
 !define expectedFileSize {316188}
 !define publishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvinData"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]},{"name":"visibility","value":"published"}]},{"name":"originalFileName","value":"TiffImage1.tiff"},{"name":"expectedFileSize","value":"316188"}],"attributes":{"type":"generic"}}-!}
+
 !define unpublishedBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvinData"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]},{"name":"visibility","value":"unpublished"}]},{"name":"originalFileName","value":"TiffImage2.tiff"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
-!define hiddenBinary {!-{"name":"binary","children":[{"name":"recordInfo","children":[{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvinData"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"genericBinary"}]},{"name":"visibility","value":"hidden"}]},{"name":"originalFileName","value":"TiffImage3.tiff"},{"name":"expectedFileSize","value":"-!${expectedFileSize}!-"}],"attributes":{"type":"generic"}}-!}
 
 Create binary records
 !| RecordEndpointFixture |
 | authToken | type | json | testCreateRecord? | getStatusType? | getCreatedId? |
 | $alvinAdminAuthToken | binary | ${publishedBinary} | | CREATED | $publishedRecordId= |
 | $alvinAdminAuthToken | binary | ${unpublishedBinary} | | CREATED | $unpublishedRecordId= |
-| $alvinAdminAuthToken | binary | ${hiddenBinary} | | CREATED | $hiddenRecordId= |
 
 ----
 
@@ -27,12 +26,10 @@ Create binary records
 | authToken | type | id | fileName | testUpload? | getStatusType? |
 | $adminAuthToken | binary | $publishedRecordId | aTiff.tiff | ${expectedUploadAnswer} | ${expectedUploadResult} |
 | $adminAuthToken | binary | $unpublishedRecordId | aTiff.tiff | ${expectedUploadAnswer} | ${expectedUploadResult} |
-| $adminAuthToken | binary | $hiddenRecordId | aTiff.tiff | ${expectedUploadAnswer} | ${expectedUploadResult} |
 
 !| WaitForRegExReadResultFixture |
 | authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
 | $adminAuthToken | binary | $publishedRecordId | 250 | 50 | \"name\":\"jp2\" | Found |
 | $adminAuthToken | binary | $unpublishedRecordId | 250 | 50 | \"name\":\"jp2\" | Found |
-| $adminAuthToken | binary | $hiddenRecordId | 250 | 50 | \"name\":\"jp2\" | Found |
 *!
 *!

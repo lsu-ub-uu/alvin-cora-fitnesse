@@ -7,7 +7,6 @@ Static
 | authToken | type | id | testDeleteRecord? | getStatusType? |
 | $alvinAdminAuthToken | binary | $publishedRecordId | | OK |
 | $alvinAdminAuthToken | binary | $unpublishedRecordId | | OK |
-| $alvinAdminAuthToken | binary | $hiddenRecordId | | OK |
 
 Reset headers for smartrics fixture
 | Table:smartrics.rest.fitnesse.fixture.RestFixtureConfig | |

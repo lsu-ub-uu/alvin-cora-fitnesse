@@ -38,19 +38,6 @@ Static
 | ${currentAuthToken} | binary | ${recordId} | large | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
 | ${currentAuthToken} | binary | ${recordId} | jp2 | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
 
-!5 '''Read hidden'''
-!***> Setup hidden
-!define recordId {$hiddenRecordId}
-*!
-!| DownloadFixture |
-| authToken | recordType | recordId | representation | testDownload? | getStatusType?|
-| ${currentAuthToken} | binary | ${recordId} | master | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
-| ${currentAuthToken} | binary | ${recordId} | thumbnail | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
-| ${currentAuthToken} | binary | ${recordId} | medium | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
-| ${currentAuthToken} | binary | ${recordId} | large | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
-| ${currentAuthToken} | binary | ${recordId} | jp2 | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
-*!
-*!
 !***> Guest tests
 !***> Setup guest test case
 !define currentAuthToken {$guestToken}
@@ -82,17 +69,3 @@ Static
 | ${currentAuthToken} | binary | ${recordId} | large | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
 | ${currentAuthToken} | binary | ${recordId} | jp2 | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
 
-!5 '''Read hidden'''
-!***> Setup hidden
-!define recordId {$hiddenRecordId}
-!define expectedDownloadStatus {FORBIDDEN}
-*!
-!| DownloadFixture |
-| authToken | recordType | recordId | representation | testDownload? | getStatusType?|
-| ${currentAuthToken} | binary | ${recordId} | master | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
-| ${currentAuthToken} | binary | ${recordId} | thumbnail | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
-| ${currentAuthToken} | binary | ${recordId} | medium | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
-| ${currentAuthToken} | binary | ${recordId} | large | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
-| ${currentAuthToken} | binary | ${recordId} | jp2 | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
-*!
-*!

@@ -17,7 +17,6 @@ Static
 | authToken | type |id |testReadAndStoreRecord? |
 | ${currentAuthToken} | binary | $publishedRecordId | =~/"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/","identifier":"binary:\d*"/ |
 | ${currentAuthToken} | binary | $unpublishedRecordId | =~/"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/","identifier":"binary:\d*"/ |
-| ${currentAuthToken} | binary | $hiddenRecordId | =~/"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/","identifier":"binary:\d*"/ |
 *!
 *!
 !***> Guest tests
@@ -30,6 +29,5 @@ Static
 | authToken | type | id | testReadAndStoreRecord? |
 | ${currentAuthToken} | binary | $publishedRecordId | =~/"otherProtocols":\{"iiif":\{"server":"${systemUnderTestUrl}iiif\/","identifier":"binary:\d*"/ |
 | ${currentAuthToken} | binary | $unpublishedRecordId |=~/^(?!.*(iiif).*).+$/ |
-| ${currentAuthToken} | binary | $hiddenRecordId |=~/^(?!.*(iiif).*).+$/ |
 *!
 *!

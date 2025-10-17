@@ -13,8 +13,8 @@ Static
 !define currentAuthToken {$alvinAdminAuthToken}
 !define recordId {$hiddenRecord}
 
-### Expect all 3 records are listed (published, unpunlished and hidden (fitnesse1, fitnesse2 and fitnesse3))
-!define expectedListResult {=~/(?=.*"name":"mainTitle","value":"fitnesse1")(?=.*"name":"mainTitle","value":"fitnesse2")(?=.*"name":"mainTitle","value":"fitnesse3")/}
+### Expect all 2 records are listed (published and unpunlished (fitnesse1, fitnesse2))
+!define expectedListResult {=~/(?=.*"name":"mainTitle","value":"fitnesse1")(?=.*"name":"mainTitle","value":"fitnesse2")/}
 *!
 !*** '''Case 1''': An admin should be able to list alvin records with any visibility
 !| ComparerFixture |
@@ -26,7 +26,6 @@ Static
 | authToken | type   | id | testReadAndStoreRecord? | getStatusType? |
 | ${currentAuthToken} | alvin-record | $publishedRecord | | OK |
 | ${currentAuthToken} | alvin-record | $unpublishedRecord | | OK |
-| ${currentAuthToken} | alvin-record | $hiddenRecord | | OK |
 *!
 *!
 !***> Guest tests
@@ -34,10 +33,10 @@ Static
 !define currentAuthToken {$guestToken}
 !define recordId {$publishedRecord}
 
-### Expect only 1 record is listed (published (fitnesse1) and the others are not listed (unpublished and hidden (fitnesse2 and fitnesse3)).
-!define expectedSearchResult {(?=.*"name":"mainTitle","value":"fitnesse1")(?!.*"name":"mainTitle","value":"fitnesse2")(?!.*"name":"mainTitle","value":"fitnesse3")}
+### Expect only 1 record is listed (published (fitnesse1) and the others are not listed (unpublished (fitnesse2)).
+!define expectedSearchResult {(?=.*"name":"mainTitle","value":"fitnesse1")(?!.*"name":"mainTitle","value":"fitnesse2")}
 changed waiting for visibility to be implemented
-!define expectedSearchResult {(?=.*"name":"mainTitle","value":"fitnesse1")(?=.*"name":"mainTitle","value":"fitnesse2")(?=.*"name":"mainTitle","value":"fitnesse3")}
+!define expectedSearchResult {(?=.*"name":"mainTitle","value":"fitnesse1")(?=.*"name":"mainTitle","value":"fitnesse2")}
 !define recordId {$publishedRecord}
 *!
 
@@ -46,6 +45,5 @@ changed waiting for visibility to be implemented
 | authToken | type   | id | testReadAndStoreRecord? | getStatusType? |
 | ${currentAuthToken} | alvin-record | $publishedRecord | | OK |
 | ${currentAuthToken} | alvin-record | $unpublishedRecord | | FORBIDDEN |
-| ${currentAuthToken} | alvin-record | $hiddenRecord | | FORBIDDEN |
 *!
 *!
