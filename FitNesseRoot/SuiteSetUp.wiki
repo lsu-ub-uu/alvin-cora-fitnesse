@@ -16,6 +16,12 @@ Suite
 | se.uu.ub.cora.fitnesseintegration.authentication |
 | se.uu.ub.cora.alvin.fitnesse |
 
+!| script | LoginToken |
+| setFitnesseAdminLoginId | ${fitnesseAdminLoginId} |
+| setFitnesseAdminAppToken | ${fitnesseAdminAppToken} |
+| setFitnesseUserLoginId | ${fitnesseUserLoginId} |
+| setFitnesseUserAppToken | ${fitnesseUserAppToken} |
+
 !| script | SystemUrl |
 | setUrl | ${systemUnderTestUrl} |
 | setAppTokenVerifierUrl | ${appTokenVerifierUrl} |
@@ -25,7 +31,6 @@ Suite
 !| script | DependencyProvider |
 | setHttpHandlerFactoryClassName | se.uu.ub.cora.httphandler.HttpHandlerFactoryImp |
 | setChildComparerUsingClassName | se.uu.ub.cora.fitnesseintegration.ChildComparerImp |
-| setComparerFactoryUsingClassName | se.uu.ub.cora.fitnesseintegration.compare.ComparerFactoryImp |
 
 
 !***> Import classes through pom.xml
