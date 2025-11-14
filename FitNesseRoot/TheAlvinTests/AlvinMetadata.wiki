@@ -1,0 +1,7 @@
+---
+Suite
+---
+!1 Alvin metadata
+Tests to make sure that Alvins metadata types are defined as expected.
+
+!contents -R2 -g -p -f -h

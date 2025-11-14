@@ -1,0 +1,88 @@
+---
+Test
+---
+!1 Place
+Place is an authority record type for each place that is referenced from alvin records.
+
+!2 Place
+There is only one validation type for place.
+
+!*< Setup record type definition
+
+!define recordTypeId {alvin-place}
+!define recordTypeDefinition {!-place (group)
+	authority lang:{swe, eng, nor} (group, 1-3, noConstraint)
+		geographic (textVariable, 1-1, noConstraint, I)
+	variant lang:{swe, nor, lat, fre, eng, ger, dan, grc, ara, ita, und, pol, dut, chu, uig, rus, zxx, spa, egy, chi, per, abk, ace, ach, ada, ady, aar, afh, afr, afa, ain, aka, akk, alb, ale, alg, alt, tut, amh, anp, apa, arg, arn, arc, arp, arw, arm, art, rup, asm, ast, ath, aus, map, ava, ave, awa, aym, aze, ban, bat, bal, bam, bai, bad, bnt, bas, bak, baq, btk, bem, ben, ber, bej, bho, dzo, bih, bik, byn, bis, nob, bos, bra, bre, bug, bul, bua, bur, cad, ceb, cai, chg, cmc, cha, chr, chy, chb, chn, cho, chk, cre, dak, dar, day, del, chp, din, div, doi, dgr, dra, dua, dyu, bin, efi, eka, elx, smn, myv, ypk, epo, est, ewe, ewo, fan, fat, phn, fij, fil, phi, fin, fiu, mul, fon, 9fd, ang, gez, fro, goh, sga, non, kaw, 9ft, nwc, peo, 9fs, cpf, fry, fur, ful, fao, gaa, gay, glg, gba, geo, gem, gil, gon, gor, got, grb, kal, grn, guj, gwi, hai, hat, hau, haw, heb, her, hit, hin, hil, hmo, hmn, hup, gla, hsb, iba, ibo, ido, ijo, ilo, inc, ine, ind, inh, ina, ile, iku, ipk, ira, gle, iro, ice, sah, jpn, jav, yid, jrb, jpr, kbd, kab, kac, xal, kam, khm, kan, kau, kaa, krc, krl, kar, car, kas, csb, cat, cau, kaz, cel, kha, khi, kon, kik, kir, tlh, kom, kok, cop, kor, cor, cos, kpe, crp, crh, hrv, kro, kum, kur, kru, kos, cus, kut, wel, lah, lam, oci, lao, lav, lez, lim, lin, lit, jbo, lol, loz, lub, lua, lug, lui, smj, lun, luo, ltz, dsb, nds, mad, mag, mai, mak, mac, mlg, may, mal, mlt, mnc, mdr, man, mni, mno, glv, mao, mar, chm, mah, mwr, mas, myn, kmb, enm, frm, gmh, mga, dum, men, 9mk, mic, min, mwl, lus, moh, mdf, mon, mkh, mos, mun, mus, nah, nau, nav, nbl, nde, ndo, nap, nep, new, nia, nic, ssa, niu, nqo, nog, nai, frr, sme, nso, nub, nym, nya, nyn, gre, nno, nyo, nzi, oji, ori, orm, osa, oss, oto, ota, kua, pal, pau, pli, pam, pag, pan, pap, paa, pus, cpe, pon, por, cpp, pra, pro, que, raj, rap, rar, rom, roa, rum, run, kin, roh, kho, sal, sam, smi, smo, sad, sag, san, sat, srd, sas, gsw, sel, sem, srp, srr, shn, sna, iii, scn, sid, snd, sin, sit, sio, sms, sco, den, sla, slo, slv, sog, som, son, snk, wen, sot, lad, srn, suk, sux, sun, sus, bla, swa, ssw, sai, sma, syc, syr, tgk, tgl, tah, tmh, tam, tat, sgn, tel, tem, ter, tet, tha, tai, tib, tig, tir, tiv, cze, che, chv, tli, tpi, tkl, tog, ton, tsi, tso, tsn, tum, tup, tur, tuk, tvl, tyv, twi, udm, uga, ukr, umb, hun, urd, uzb, vai, wln, ven, vie, bel, vol, vot, him, wak, wal, war, was, wol, xho, yao, yap, yor, znd, zap, zza, zen, zha, zul, zun, frs, mis} (group, 0-X, noConstraint)
+		geographic (textVariable, 1-1, noConstraint, I)
+		orientationCode (collectionVariable, 0-1, noConstraint)
+	country (collectionVariable, 0-1, noConstraint, I)
+	point (group, 0-1, noConstraint)
+		latitude (textVariable, 1-1, noConstraint)
+		longitude (textVariable, 1-1, noConstraint)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+		dataDivider {alvinData} (recordLink, 1-1, noConstraint)
+		createdBy (recordLink, 1-1, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)-!}
+
+#idSource (userSupplied/timestamp/sequence) others true/false
+!define recordTypeIdSource {userSupplied}
+!define recordTypeIsPublic {true}
+!define recordTypeUsePermissionUnit {false}
+!define recordTypeUseVisibility {false}
+!define recordTypeUseTrashBin {false}
+!define recordTypeStoreInArchive {false}
+
+*!
+!include -seamless .HelperPages.checkRecordType
+
+!*< Setup validation type definition
+
+!define validationTypeId {place}
+!define recordTypeId {alvin-place}
+!define createValidationTypeDefinition {!-place (group)
+	authority lang:{swe, eng, nor} (group, 1-3, noConstraint)
+		geographic (textVariable, 1-1, noConstraint, I)
+	variant lang:{swe, nor, lat, fre, eng, ger, dan, grc, ara, ita, und, pol, dut, chu, uig, rus, zxx, spa, egy, chi, per, abk, ace, ach, ada, ady, aar, afh, afr, afa, ain, aka, akk, alb, ale, alg, alt, tut, amh, anp, apa, arg, arn, arc, arp, arw, arm, art, rup, asm, ast, ath, aus, map, ava, ave, awa, aym, aze, ban, bat, bal, bam, bai, bad, bnt, bas, bak, baq, btk, bem, ben, ber, bej, bho, dzo, bih, bik, byn, bis, nob, bos, bra, bre, bug, bul, bua, bur, cad, ceb, cai, chg, cmc, cha, chr, chy, chb, chn, cho, chk, cre, dak, dar, day, del, chp, din, div, doi, dgr, dra, dua, dyu, bin, efi, eka, elx, smn, myv, ypk, epo, est, ewe, ewo, fan, fat, phn, fij, fil, phi, fin, fiu, mul, fon, 9fd, ang, gez, fro, goh, sga, non, kaw, 9ft, nwc, peo, 9fs, cpf, fry, fur, ful, fao, gaa, gay, glg, gba, geo, gem, gil, gon, gor, got, grb, kal, grn, guj, gwi, hai, hat, hau, haw, heb, her, hit, hin, hil, hmo, hmn, hup, gla, hsb, iba, ibo, ido, ijo, ilo, inc, ine, ind, inh, ina, ile, iku, ipk, ira, gle, iro, ice, sah, jpn, jav, yid, jrb, jpr, kbd, kab, kac, xal, kam, khm, kan, kau, kaa, krc, krl, kar, car, kas, csb, cat, cau, kaz, cel, kha, khi, kon, kik, kir, tlh, kom, kok, cop, kor, cor, cos, kpe, crp, crh, hrv, kro, kum, kur, kru, kos, cus, kut, wel, lah, lam, oci, lao, lav, lez, lim, lin, lit, jbo, lol, loz, lub, lua, lug, lui, smj, lun, luo, ltz, dsb, nds, mad, mag, mai, mak, mac, mlg, may, mal, mlt, mnc, mdr, man, mni, mno, glv, mao, mar, chm, mah, mwr, mas, myn, kmb, enm, frm, gmh, mga, dum, men, 9mk, mic, min, mwl, lus, moh, mdf, mon, mkh, mos, mun, mus, nah, nau, nav, nbl, nde, ndo, nap, nep, new, nia, nic, ssa, niu, nqo, nog, nai, frr, sme, nso, nub, nym, nya, nyn, gre, nno, nyo, nzi, oji, ori, orm, osa, oss, oto, ota, kua, pal, pau, pli, pam, pag, pan, pap, paa, pus, cpe, pon, por, cpp, pra, pro, que, raj, rap, rar, rom, roa, rum, run, kin, roh, kho, sal, sam, smi, smo, sad, sag, san, sat, srd, sas, gsw, sel, sem, srp, srr, shn, sna, iii, scn, sid, snd, sin, sit, sio, sms, sco, den, sla, slo, slv, sog, som, son, snk, wen, sot, lad, srn, suk, sux, sun, sus, bla, swa, ssw, sai, sma, syc, syr, tgk, tgl, tah, tmh, tam, tat, sgn, tel, tem, ter, tet, tha, tai, tib, tig, tir, tiv, cze, che, chv, tli, tpi, tkl, tog, ton, tsi, tso, tsn, tum, tup, tur, tuk, tvl, tyv, twi, udm, uga, ukr, umb, hun, urd, uzb, vai, wln, ven, vie, bel, vol, vot, him, wak, wal, war, was, wol, xho, yao, yap, yor, znd, zap, zza, zen, zha, zul, zun, frs, mis} (group, 0-X, noConstraint)
+		geographic (textVariable, 1-1, noConstraint, I)
+		orientationCode (collectionVariable, 0-1, noConstraint)
+	country (collectionVariable, 0-1, noConstraint)
+	point (group, 0-1, noConstraint)
+		latitude (textVariable, 1-1, noConstraint)
+		longitude (textVariable, 1-1, noConstraint)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		validationType {place} (recordLink, 1-1, noConstraint)
+		dataDivider {alvinData} (recordLink, 1-1, noConstraint)-!}
+	
+!define updateValidationTypeDefinition {!-place (group)
+	authority lang:{swe, eng, nor} (group, 1-3, noConstraint)
+		geographic (textVariable, 1-1, noConstraint, I)
+	variant lang:{swe, nor, lat, fre, eng, ger, dan, grc, ara, ita, und, pol, dut, chu, uig, rus, zxx, spa, egy, chi, per, abk, ace, ach, ada, ady, aar, afh, afr, afa, ain, aka, akk, alb, ale, alg, alt, tut, amh, anp, apa, arg, arn, arc, arp, arw, arm, art, rup, asm, ast, ath, aus, map, ava, ave, awa, aym, aze, ban, bat, bal, bam, bai, bad, bnt, bas, bak, baq, btk, bem, ben, ber, bej, bho, dzo, bih, bik, byn, bis, nob, bos, bra, bre, bug, bul, bua, bur, cad, ceb, cai, chg, cmc, cha, chr, chy, chb, chn, cho, chk, cre, dak, dar, day, del, chp, din, div, doi, dgr, dra, dua, dyu, bin, efi, eka, elx, smn, myv, ypk, epo, est, ewe, ewo, fan, fat, phn, fij, fil, phi, fin, fiu, mul, fon, 9fd, ang, gez, fro, goh, sga, non, kaw, 9ft, nwc, peo, 9fs, cpf, fry, fur, ful, fao, gaa, gay, glg, gba, geo, gem, gil, gon, gor, got, grb, kal, grn, guj, gwi, hai, hat, hau, haw, heb, her, hit, hin, hil, hmo, hmn, hup, gla, hsb, iba, ibo, ido, ijo, ilo, inc, ine, ind, inh, ina, ile, iku, ipk, ira, gle, iro, ice, sah, jpn, jav, yid, jrb, jpr, kbd, kab, kac, xal, kam, khm, kan, kau, kaa, krc, krl, kar, car, kas, csb, cat, cau, kaz, cel, kha, khi, kon, kik, kir, tlh, kom, kok, cop, kor, cor, cos, kpe, crp, crh, hrv, kro, kum, kur, kru, kos, cus, kut, wel, lah, lam, oci, lao, lav, lez, lim, lin, lit, jbo, lol, loz, lub, lua, lug, lui, smj, lun, luo, ltz, dsb, nds, mad, mag, mai, mak, mac, mlg, may, mal, mlt, mnc, mdr, man, mni, mno, glv, mao, mar, chm, mah, mwr, mas, myn, kmb, enm, frm, gmh, mga, dum, men, 9mk, mic, min, mwl, lus, moh, mdf, mon, mkh, mos, mun, mus, nah, nau, nav, nbl, nde, ndo, nap, nep, new, nia, nic, ssa, niu, nqo, nog, nai, frr, sme, nso, nub, nym, nya, nyn, gre, nno, nyo, nzi, oji, ori, orm, osa, oss, oto, ota, kua, pal, pau, pli, pam, pag, pan, pap, paa, pus, cpe, pon, por, cpp, pra, pro, que, raj, rap, rar, rom, roa, rum, run, kin, roh, kho, sal, sam, smi, smo, sad, sag, san, sat, srd, sas, gsw, sel, sem, srp, srr, shn, sna, iii, scn, sid, snd, sin, sit, sio, sms, sco, den, sla, slo, slv, sog, som, son, snk, wen, sot, lad, srn, suk, sux, sun, sus, bla, swa, ssw, sai, sma, syc, syr, tgk, tgl, tah, tmh, tam, tat, sgn, tel, tem, ter, tet, tha, tai, tib, tig, tir, tiv, cze, che, chv, tli, tpi, tkl, tog, ton, tsi, tso, tsn, tum, tup, tur, tuk, tvl, tyv, twi, udm, uga, ukr, umb, hun, urd, uzb, vai, wln, ven, vie, bel, vol, vot, him, wak, wal, war, was, wol, xho, yao, yap, yor, znd, zap, zza, zen, zha, zul, zun, frs, mis} (group, 0-X, noConstraint)
+		geographic (textVariable, 1-1, noConstraint, I)
+		orientationCode (collectionVariable, 0-1, noConstraint)
+	country (collectionVariable, 0-1, noConstraint, I)
+	point (group, 0-1, noConstraint)
+		latitude (textVariable, 1-1, noConstraint)
+		longitude (textVariable, 1-1, noConstraint)
+	recordInfo (group, 1-1, noConstraint)
+		id (textVariable, 1-1, noConstraint, I)
+		type (recordLink, 1-1, noConstraint)
+		validationType (recordLink, 1-1, noConstraint)
+		dataDivider {alvinData} (recordLink, 1-1, noConstraint)
+		createdBy (recordLink, 1-1, noConstraint)
+		tsCreated (textVariable, 1-1, noConstraint)
+		updated (group, 1-X, noConstraint)
+			updatedBy (recordLink, 1-1, noConstraint)
+			tsUpdated (textVariable, 1-1, noConstraint)-!}
+
+*!
+!include -seamless .HelperPages.checkValidationType
+
+----
