@@ -99,6 +99,7 @@
 				<includes>
 					<include>TheAlvinTests/</include>
 					<include>FrontPage/</include>
+					<include>HelperPages/</include>
 					<include>properties</include>
 					<include>properties.xml</include>
 					<include>content.txt</include>
