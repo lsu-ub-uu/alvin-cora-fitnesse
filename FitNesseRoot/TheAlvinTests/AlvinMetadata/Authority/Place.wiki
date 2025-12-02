@@ -37,7 +37,7 @@ There is only one validation type for place.
 !define recordTypeUsePermissionUnit {false}
 !define recordTypeUseVisibility {false}
 !define recordTypeUseTrashBin {false}
-!define recordTypeStoreInArchive {false}
+!define recordTypeStoreInArchive {true}
 
 *!
 !include -seamless .HelperPages.checkRecordType
