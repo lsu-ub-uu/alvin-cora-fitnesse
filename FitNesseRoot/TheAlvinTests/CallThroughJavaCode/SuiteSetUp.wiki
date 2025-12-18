@@ -8,9 +8,9 @@ Suite
 !***> Create alvin authTokens
 !| AuthenticationFixture |
 | appTokenLogin? | loginId | appToken | getAuthToken? | getStatusType? |
-| | alvinAdmin@cora.epc.ub.uu.se | a50ca087-a3f5-4393-b2bb-315436d3c3be | $alvinAdminAuthToken= | CREATED |
 | | fitnesseAdmin@system.cora.uu.se | | $adminAuthToken= | CREATED |
 *!
+#| | alvinAdmin@cora.epc.ub.uu.se | a50ca087-a3f5-4393-b2bb-315436d3c3be | $alvinAdminAuthToken= | CREATED |
 
 *!
 !| script | AuthTokenHolder |
@@ -19,10 +19,11 @@ Suite
 !***> Login for user
 !| AuthenticationFixture |
 | appTokenLogin? | loginId | appToken | getAuthToken? | getStatusType? |
-| | alvinUser@cora.epc.ub.uu.se | 39291112-aff2-4929-b201-515720693722 | $alvinUserAuthToken= | CREATED |
 | | fitnesseUser@system.cora.uu.se  | | $userAuthToken= | CREATED |
 
 *!
+#| | alvinUser@cora.epc.ub.uu.se | 39291112-aff2-4929-b201-515720693722 | $alvinUserAuthToken= | CREATED |
+
 !| script | AuthTokenHolder |
 | setUserAuthToken | $userAuthToken |
 
@@ -31,6 +32,9 @@ Suite
 !| AuthenticationFixture |
 | idpLogin? | EPPN | getAuthToken? | getStatusType? |
 | | userNotInDb@user.uu.se | $guestToken= | OK |
+| | alvinAdmin@cora.epc.ub.uu.se | $alvinAdminAuthToken= | OK |
+| | alvinUser@cora.epc.ub.uu.se |  $alvinUserAuthToken= | CREATED |
+
 *!
 
 *!
