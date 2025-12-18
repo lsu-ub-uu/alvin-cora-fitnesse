@@ -33,7 +33,7 @@ Suite
 | idpLogin? | EPPN | getAuthToken? | getStatusType? |
 | | userNotInDb@user.uu.se | $guestToken= | OK |
 | | alvinAdmin@cora.epc.ub.uu.se | $alvinAdminAuthToken= | OK |
-| | alvinUser@cora.epc.ub.uu.se |  $alvinUserAuthToken= | CREATED |
+| | alvinUser@cora.epc.ub.uu.se |  $alvinUserAuthToken= | OK |
 
 *!
 
