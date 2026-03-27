@@ -1,12 +1,20 @@
 ---
 Static
 ---
-!3 URN tests
-  * '''Case 1''': An alvin-record must have a URN number matching it's ID after creation
-  * '''Case 2''': It must not be possible to manually change the URN number
-  * '''Case 3''': It must not be possible to delete the URN number
+!2 URN:NBN
 
-!***> Case 1: An alvin-record must have a URN number matching it's ID after creation
+Implementerar URN:NBN för Alvin. 
+
+Alvins URN:NBN ser ut:  urn:nbn:se:alvin:portal:record-{id}
+
+Se https://www.kb.se/pliktleverans-och-isbn/urnnbn/vad-ar-urnnbn.html för mer information
+
+!3 Tests
+  * '''Case 1''': An alvin-record must have a URN:NBN number matching it's ID after creation
+  * '''Case 2''': It must not be possible to manually change the URN:NBN number
+  * '''Case 3''': It must not be possible to delete the URN:NBN number
+
+!***> Case 1: An alvin-record must have a URN:NBN number matching it's ID after creation
 !define recordType {alvin-record}
 !define expectedCreateResult {CREATED}
 
@@ -19,7 +27,7 @@ Static
 | $alvinAdminAuthToken | ${recordType} | ${alvinRecordWithUrn} | ${expectedAlvinRecordWithUrn} | ${expectedCreateResult} | $urnRecord= |
 
 *!
-!***> Case 2: It must not be possible to manually update the URN number
+!***> Case 2: It must not be possible to manually update the URN:NBN number
 !define recordType {alvin-record}
 !define expectedUpdateResult {OK}
 
@@ -32,7 +40,7 @@ Static
 | $alvinAdminAuthToken | ${recordType} | $urnRecord | ${alvinUpdateRecordWithUrn} | ${expectedAlvinRecordWithUrn} | ${expectedUpdateResult} |
 
 *!
-!***> Case 3: It must not be possible to delete the URN number
+!***> Case 3: It must not be possible to delete the URN:NBN number
 !define recordType {alvin-record}
 !define expectedUpdateResult {OK}
 
