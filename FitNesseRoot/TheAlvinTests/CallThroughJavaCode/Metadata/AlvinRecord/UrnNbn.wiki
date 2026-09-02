@@ -1,5 +1,5 @@
 ---
-Test
+Static
 ---
 !2 URN:NBN
 
@@ -18,7 +18,7 @@ Se https://www.kb.se/pliktleverans-och-isbn/urnnbn/vad-ar-urnnbn.html för mer i
 !define recordType {alvin-record}
 !define expectedCreateResult {CREATED}
 !define visibility {unpublished}
-!define tsVisibility {2025-01-22T10:01:49.797866Z}
+!define tsVisibility {2026-09-02T14:31:05.408686Z}
 
 !define alvinRecordWithUrn {!-{"name":"record","children":[{"name":"typeOfResource","value":"txt"},{"name":"title","children":[{"name":"mainTitle","value":"fitnesseUrnTest"}]},{"name":"physicalLocation","children":[{"name":"heldBy","children":[{"name":"location","children":[{"name":"linkedRecordType","value":"alvin-location"},{"name":"linkedRecordId","value":"3"}]}]}]},{"name":"recordInfo","children":[{"name":"id","value":"234234"},{"name":"visibility","value":"-!${visibility}!-"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"record"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvinData"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"3"}]}]}]}-!}
 
@@ -46,7 +46,7 @@ Se https://www.kb.se/pliktleverans-och-isbn/urnnbn/vad-ar-urnnbn.html för mer i
 !define recordType {alvin-record}
 !define expectedUpdateResult {OK}
 
-!define alvinUpdateRecordWithUrn {!-{"name":"record","children":[{"name":"typeOfResource","value":"txt"},{"name":"title","children":[{"name":"mainTitle","value":"testDeleteUrn"}]},{"name":"physicalLocation","children":[{"name":"heldBy","children":[{"name":"location","children":[{"name":"linkedRecordType","value":"alvin-location"},{"name":"linkedRecordId","value":"3"}]}]}]},{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"234234"},{"name":"visibility","value":"-!${visibility}!-"},{"name":"inTrashBin","value":"false"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"alvin-record"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"record"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvinData"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"3"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"151515"}]},{"name":"tsCreated","value":"2025-01-22T10:01:49.797866Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"151515"}]},{"name":"tsUpdated","value":"2025-01-22T10:01:49.797866Z"}]}]}]}-!}
+!define alvinUpdateRecordWithUrn {!-{"name":"record","children":[{"name":"typeOfResource","value":"txt"},{"name":"title","children":[{"name":"mainTitle","value":"testDeleteUrn"}]},{"name":"physicalLocation","children":[{"name":"heldBy","children":[{"name":"location","children":[{"name":"linkedRecordType","value":"alvin-location"},{"name":"linkedRecordId","value":"3"}]}]}]},{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"234234"},{"name":"visibility","value":"-!${visibility}!-"},{"name":"tsVisibility","value":"-!${tsVisibility}!-"},{"name":"inTrashBin","value":"false"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"alvin-record"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"record"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvinData"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"3"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"151515"}]},{"name":"tsCreated","value":"2025-01-22T10:01:49.797866Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"151515"}]},{"name":"tsUpdated","value":"2025-01-22T10:01:49.797866Z"}]}]}]}-!}
 
 !define expectedAlvinRecordWithUrn {=~/(?=.*"name":"mainTitle","value":"testDeleteUrn")(?=.*"name":"id","value":"234234")(?=.*"name":"urn","value":"urn:nbn:se:alvin:portal:record-234234")/}
 
@@ -89,7 +89,7 @@ Vi publicerar posten som ingår i alvin-serien.
 !***> Publicera alvin posten. 
 !| ChildComparerFixture |
 | authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? | 
-| $systemAdminAuthToken | ${recordType} | $urnRecord| ${alvinUpdateRecordWithUrn} |  | OK | 
+| $alvinAdminAuthToken | ${recordType} | $urnRecord| ${alvinUpdateRecordWithUrn} |  | OK | 
 *!
 
 Vi kontrollerar att den publicerade posten i alvin-serien finns med i resultatet från tjänsten
@@ -106,7 +106,7 @@ Vi avpublicerar posten som ingår i alvin-serien.
 !***> Avpublicera alvin posten. 
 !| ChildComparerFixture |
 | authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? | 
-| $systemAdminAuthToken | ${recordType} | $urnRecord| ${alvinUpdateRecordWithUrn} |  | OK | 
+| $alvinAdminAuthToken | ${recordType} | $urnRecord| ${alvinUpdateRecordWithUrn} |  | OK | 
 *!
 Vi kontrollerar att den avpublicerade posten i alvin-serien finns med i resultatet från tjänsten
 !define expectedRecordsNotPresent {!-count(//*[local-name()='identifier'][text()='urn:nbn:se:alvin:portal:record--!$urnRecord!-'])=0-!}
@@ -124,19 +124,19 @@ Vi kontrollerar att om man läser poster från en okänd serie '''nonExisting'''
 *!
 
 !***> Case 6:  En post som är publicerad tidigare än för 24h sen, skall inte dyka upp i current
-För att kunna sätta publiceringsdatum själva börjar vi med att ändra så att posttypen alvin-output inte använder visibility. Därefter sätter vi manuellt ett publiceringsdatum under år 2006 och publiserar posten. Vi sätter tillbaka att alvin-output använder visibility. 
+För att kunna sätta publiceringsdatum själva börjar vi med att ändra så att posttypen alvin-record inte använder visibility. Därefter sätter vi manuellt ett publiceringsdatum under år 2006 och publiserar posten. Vi sätter tillbaka att alvin-record använder visibility. 
 Med ett så gammalt publiceringsdatum på plats testar vi sedan att den dyker upp i all men inte i current.
 
 !***> Sätt ett publiceringsdatum under år  2006. 
-Spara nuvarande inställningar för alvin-output
+Spara nuvarande inställningar för alvin-record
 !| RememberRecordState |
 | type       | id            | version  | remember? |
-| recordType | alvin-output   | original | OK        |
+| recordType | alvin-record   | original | OK        |
 
-Ändra så att alvin-output inte använder visibility, vilket gör att vi själva kan sätta ett publiceringsdatum.
+Ändra så att alvin-record inte använder visibility, vilket gör att vi själva kan sätta ett publiceringsdatum.
 !| UpdateRecordType |
-| id          | idSource | public | usePermissionUnit | useVisibility | useTrashBin | storeInArchive | useHostRecordForPermissions |update? |
-| alvin-output | sequence | false  | true              | false         | true        | true           | false					   | OK     |
+| id           | idSource     | public | usePermissionUnit | useVisibility | useTrashBin | storeInArchive | useHostRecordForPermissions |update? |
+| alvin-record | userSupplied | false  | true              | false         | true        | true           | false					   | OK     |
 
 Vi publicerar posten i alvin-serien med ett publiceringsdatum under år 2026
 !define tsVisibility {2006-03-30T14:35:23.218738Z}
@@ -144,12 +144,12 @@ Vi publicerar posten i alvin-serien med ett publiceringsdatum under år 2026
 !define urnnbnValue {!-,{"name":"urn","value":"urn:nbn:se:alvin:portal:record--!$urnRecord!-"}-!}
 !| ChildComparerFixture |
 | authToken             | type          | id                 | json                           | testUpdateAndStoreRecord? | getStatusType? | 
-| $systemAdminAuthToken | ${recordType} | $urnRecord| ${alvinUpdateRecordWithUrn} |                           | OK             | 
+| $alvinAdminAuthToken | ${recordType} | $urnRecord| ${alvinUpdateRecordWithUrn} |                           | OK             | 
 
-Sätt tillbaka så att alvin-output använder visibility, genom att skriva tillbaka de sparade inställningarna från ovan.
+Sätt tillbaka så att alvin-record använder visibility, genom att skriva tillbaka de sparade inställningarna från ovan.
 !| RememberRecordState |
 | type       | id          | version  | memoryToStorage? |
-| recordType | alvin-output | original | OK               |
+| recordType | alvin-record | original | OK               |
 
 *!
 Vi kontrollerar att i alvin-serien finns posten med i '''all'''
@@ -173,21 +173,14 @@ Vi publicerar posten som ingår i alvin-serien.
 !***> Publicera alvin posten. 
 !| ChildComparerFixture |
 | authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? | 
-| $systemAdminAuthToken | ${recordType} | $urnRecord| ${alvinUpdateRecordWithUrn} |  | OK | 
+| $alvinAdminAuthToken | ${recordType} | $urnRecord| ${alvinUpdateRecordWithUrn} |  | OK | 
 *!
 
 Vi kontrollerar att den publicerade posten i alvin-serien finns med i resultatet från tjänsten och har en url som pekar på alvinklienten
-!define identifierExists {!-count(//*[local-name()='record'][.//*[local-name()='identifier']='urn:nbn:se:alvin:portal:record--!$urnRecord!-' and ./*[local-name()='header']/*[local-name()='destinations']/*[local-name()='destination']/*[local-name()='url'][substring(text(), string-length(text()) - string-length('/alvinclient/alvin-output/-!$urnRecord!-') + 1) = '/alvinclient/alvin-output/-!$urnRecord!-']])=1-!}
+!define identifierExists {!-count(//*[local-name()='record'][.//*[local-name()='identifier']='urn:nbn:se:alvin:portal:record--!$urnRecord!-' and ./*[local-name()='header']/*[local-name()='destinations']/*[local-name()='destination']/*[local-name()='url'][substring(text(), string-length(text()) - string-length('/alvin/alvin-record/-!$urnRecord!-') + 1) = '/alvin/alvin-record/-!$urnRecord!-']])=1-!}
 
 
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${urnNbnUrl} |
 | setHeaders | Accept: application/xml|
 | GET | /all/alvin/ | 200 |  | ${identifierExists} |
-*!
-
-!***> Clean up
-!| RecordEndpointFixture |
-|authToken|type|id|testDeleteRecord?|getStatusType?|
-|$systemAdminAuthToken|alvin-output|$recordIdWithManualUrn    | | OK | 
-|$systemAdminAuthToken|alvin-output|$urnRecord | | OK |
 *!
