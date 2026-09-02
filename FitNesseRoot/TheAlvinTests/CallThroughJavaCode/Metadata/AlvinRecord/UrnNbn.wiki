@@ -1,5 +1,5 @@
 ---
-Static
+Test
 ---
 !2 URN:NBN
 
@@ -51,4 +51,182 @@ Se https://www.kb.se/pliktleverans-och-isbn/urnnbn/vad-ar-urnnbn.html för mer i
 !| ChildComparerFixture |
 | authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? |
 | $alvinAdminAuthToken | ${recordType} | $urnRecord | ${alvinUpdateRecordWithUrn} | ${expectedAlvinRecordWithUrn} | ${expectedUpdateResult} |
+*!
+
+!3 URN:NBN Hämtningstjänst
+Hämtningstjänsten är i första hand till för att KB skall kunna populera sin uppslagstjänst så att den pekar på aktuell url för ett givet URN:NBN, se:
+https://www.kb.se/pliktleverans-och-isbn/urnnbn/sla-upp-och-hitta-en-resurs.html
+
+I hämtningstjänsten finns det två endpoints definierade:
+ * '''current''' – returnerar poster som har publicerats under de senaste 24 timmarna.
+ * '''all''' – returnerar alla poster.
+ 
+Alla poster som skapas med DiVA powered by Cora får URN:NBN i samma serie: urn:nbn:se:diva-{postId}.
+Importerade poster från DiVA Classic behåller sitt befintliga URN-NBN-id: urn:nbn:se:{classicSerie}:diva-{serieNr}.
+
+'''Url'''{{{https://[miljöUrl]/urn-nbn/[current/all]/[classicSerie|diva]/}}}
+För de här testerna jobbar vi med två poster skapade av testerna ovan, en i serien '''fitnesse''' och en i serien '''diva'''.
+ * '''Case 1''': Opublicerade poster ska inte returneras av URN-NBN-tjänsten.
+ * '''Case 2''': Nya publicerade poster som har formatet urn:nbn:se:diva-[postId] ska returneras av URN-NBN-tjänsten.
+ * '''Case 3''': Publicerade poster som har skapats i Classic, med formatet urn:nbn:se:[classicSerie]:diva-[postId], ska returneras av URN-NBN-tjänsten. ''Obs! För test används classicSerie=fitnesse.''
+ * '''Case 4''': När en post avpubliceras ska den inte längre returneras av URN-NBN-tjänsten.
+ * '''Case 5''': Om man försöker läsa en serie som inte finns ska tjänsten returnera ett tomt records-svar.
+ * '''Case 6''': En post som är publicerad tidigare än för 24h sen, skall inte dyka upp i current.
+ * '''Case 7''': Url ska finnas med i svaret, och peka på divaklienten
+
+!***> Case 1: Opublicerade poster ska inte returneras av URN-NBN-tjänsten. → ingen av de två posterna finns med.
+Vi kontrollerar att den opublicerade posten i diva-serien inte finns med i resultatet från tjänsten
+!define expectedRecordsNotPresent {!-count(//*[local-name()='identifier'][text()='urn:nbn:se:diva--!$recordIdWithAutoUrn!-'])=0-!}
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${urnNbnUrl} |
+| setHeaders | Accept: application/xml|
+| GET | /all/diva/ | 200 |  | ${expectedRecordsNotPresent} |
+!define expectedRecordsNotPresent {!-count(//*[local-name()='identifier'][text()='urn:nbn:se:fitnesse:diva-2200'])=0-!}
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${urnNbnUrl} |
+| setHeaders | Accept: application/xml|
+| GET | /all/fitnesse/ | 200 |  | ${expectedRecordsNotPresent} |
+*!
+
+!***> Case 2: Nya publicerade poster som har formatet urn:nbn:se:diva-[postId] ska returneras av URN-NBN-tjänsten. → Diva posten publiceras och den ska nu vara med.
+Vi publicerar posten som ingår i diva-serien.
+!define visibility {published}
+!define urnnbnValue {!-,{"name":"urn","value":"urn:nbn:se:diva--!$recordIdWithAutoUrn!-"}-!}
+!***> Publicera diva posten. 
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? | 
+| $systemAdminAuthToken | ${recordType} | $recordIdWithAutoUrn| ${divaOutputUpdateUrnTemplate} |  | OK | 
+*!
+
+Vi kontrollerar att den publicerade posten i diva-serien finns med i resultatet från tjänsten
+!define identifierExists {!-//*[local-name()='identifier'][text()='urn:nbn:se:diva--!$recordIdWithAutoUrn!-']-!}
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${urnNbnUrl} |
+| setHeaders | Accept: application/xml|
+| GET | /all/diva/ | 200 |  | ${identifierExists} |
+*!
+
+!***> Case 3: Publicerade poster som har skapats i Classic, med formatet urn:nbn:se:[classicSerie]:diva-[postId], ska returneras av URN-NBN-tjänsten. → "Classic(Fitnesse)" posten publiceras och det ska nu vara med.
+Vi publicerar posten som ingår i fitnesse-serien som har URN:NBN '''urn:nbn:se:fitnesse:diva-2200'''.
+!define visibility {published}
+!define urnnbnValue {!-,{"name":"urn","value":"urn:nbn:se:fitnesse:diva-2200"}-!}
+
+!***> Publicera diva posten. 
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? | 
+| $systemAdminAuthToken | ${recordType} | $recordIdWithManualUrn | ${divaOutputUpdateUrnTemplate} |  | OK | 
+*!
+Vi kontrollerar att posten som ingår i fitnesse-serien och som har URN:NBN '''urn:nbn:se:fitnesse:diva-2200''' finns med i resultatet från tjänsten
+!define identifierExists {!-//*[local-name()='identifier'][text()='urn:nbn:se:fitnesse:diva-2200']-!}
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${urnNbnUrl} |
+| setHeaders | Accept: application/xml|
+| GET | /all/fitnesse/ | 200 |  | ${identifierExists} |
+
+*!
+
+!***> Case 4a: Avpublicerade poster som har formatet urn:nbn:se:diva-[postId] ska inte returneras av URN-NBN-tjänsten. → Avpublicerade diva posten ska inte längre vara med.
+Vi avpublicerar posten som ingår i diva-serien.
+!define visibility {unpublished}
+!define urnnbnValue {!-,{"name":"urn","value":"urn:nbn:se:diva--!$recordIdWithAutoUrn!-"}-!}
+!***> Avpublicera diva posten. 
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? | 
+| $systemAdminAuthToken | ${recordType} | $recordIdWithAutoUrn| ${divaOutputUpdateUrnTemplate} |  | OK | 
+*!
+Vi kontrollerar att den avpublicerade posten i diva-serien finns med i resultatet från tjänsten
+!define expectedRecordsNotPresent {!-count(//*[local-name()='identifier'][text()='urn:nbn:se:diva--!$recordIdWithAutoUrn!-'])=0-!}
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${urnNbnUrl} |
+| setHeaders | Accept: application/xml|
+| GET | /all/diva/ | 200 |  | ${expectedRecordsNotPresent} |
+*!
+
+!***> Case 4b: Avpublicerade poster som har skapats i Classic, med formatet urn:nbn:se:[classicSerie]:diva-[postId], ska inte returneras av URN-NBN-tjänsten. → Avpublicerade "Classic(Fitnesse)" posten ska inte längre vara med.
+Vi avpublicerar posten som ingår i fitnesse-serien som har URN:NBN '''urn:nbn:se:fitnesse:diva-2200'''.
+!define visibility {unpublished}
+!define urnnbnValue {!-,{"name":"urn","value":"urn:nbn:se:fitnesse:diva-2200"}-!}
+
+!***> Avpublicera diva posten. 
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? | 
+| $systemAdminAuthToken | ${recordType} | $recordIdWithManualUrn | ${divaOutputUpdateUrnTemplate} |  | OK | 
+*!
+Vi kontrollerar att posten som ingår i fitnesse-serien och som har URN:NBN '''urn:nbn:se:fitnesse:diva-2200''' inte längre finns med i resultatet från tjänsten
+!define expectedRecordsNotPresent {!-count(//*[local-name()='identifier'][text()='urn:nbn:se:fitnesse:diva-2200'])=0-!}
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${urnNbnUrl} |
+| setHeaders | Accept: application/xml|
+| GET | /all/fitnesse/ | 200 |  | ${expectedRecordsNotPresent} |
+*!
+
+!***> Case 5: Om man försöker läsa en serie som inte finns ska tjänsten returnera ett tomt records-svar
+Vi kontrollerar att om man läser poster från en okänd serie '''nonExisting''' får man inga poster tillbaka i resultatet från tjänsten
+!define expectedCountEmpty {count(//*[local-name()='record'])=0}
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${urnNbnUrl} |
+| setHeaders | Accept: application/xml|
+| GET | /all/nonExisting/ | 200 |  | ${expectedCountEmpty} |
+*!
+
+!***> Case 6:  En post som är publicerad tidigare än för 24h sen, skall inte dyka upp i current
+För att kunna sätta publiceringsdatum själva börjar vi med att ändra så att posttypen diva-output inte använder visibility. Därefter sätter vi manuellt ett publiceringsdatum under år 2006 och publiserar posten. Vi sätter tillbaka att diva-output använder visibility. 
+Med ett så gammalt publiceringsdatum på plats testar vi sedan att den dyker upp i all men inte i current.
+
+!***> Sätt ett publiceringsdatum under år  2006. 
+Spara nuvarande inställningar för diva-output
+!| RememberRecordState |
+| type       | id            | version  | remember? |
+| recordType | diva-output   | original | OK        |
+
+Ändra så att diva-output inte använder visibility, vilket gör att vi själva kan sätta ett publiceringsdatum.
+!| UpdateRecordType |
+| id          | idSource | public | usePermissionUnit | useVisibility | useTrashBin | storeInArchive | useHostRecordForPermissions |update? |
+| diva-output | sequence | false  | true              | false         | true        | true           | false					   | OK     |
+
+Vi publicerar posten i diva-serien med ett publiceringsdatum under år 2026
+!define tsVisibility {2006-03-30T14:35:23.218738Z}
+!define visibility {published}
+!define urnnbnValue {!-,{"name":"urn","value":"urn:nbn:se:diva--!$recordIdWithAutoUrn!-"}-!}
+!| ChildComparerFixture |
+| authToken             | type          | id                 | json                           | testUpdateAndStoreRecord? | getStatusType? | 
+| $systemAdminAuthToken | ${recordType} | $recordIdWithAutoUrn| ${divaOutputUpdateUrnTemplate} |                           | OK             | 
+
+Sätt tillbaka så att diva-output använder visibility, genom att skriva tillbaka de sparade inställningarna från ovan.
+!| RememberRecordState |
+| type       | id          | version  | memoryToStorage? |
+| recordType | diva-output | original | OK               |
+
+*!
+Vi kontrollerar att i diva-serien finns posten med i '''all'''
+!define identifierExists {!-//*[local-name()='identifier'][text()='urn:nbn:se:diva--!$recordIdWithAutoUrn!-']-!}
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${urnNbnUrl} |
+| setHeaders | Accept: application/xml|
+| GET | /all/diva/ | 200 |  | ${identifierExists} |
+
+Vi kontrollerar att i diva-serien finns posten inte med i '''current'''
+!define expectedRecordsNotPresent {!-count(//*[local-name()='identifier'][text()='urn:nbn:se:diva--!$recordIdWithAutoUrn!-'])=0-!}
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${urnNbnUrl} |
+| setHeaders | Accept: application/xml|
+| GET | /current/diva/ | 200 |  | ${expectedRecordsNotPresent} |
+
+*!
+
+!***> Case 7: Url ska finnas med i svaret, och peka på divaklienten
+Vi publicerar posten som ingår i diva-serien.
+!define visibility {published}
+!define urnnbnValue {!-,{"name":"urn","value":"urn:nbn:se:diva--!$recordIdWithAutoUrn!-"}-!}
+!***> Publicera diva posten. 
+!| ChildComparerFixture |
+| authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? | 
+| $systemAdminAuthToken | ${recordType} | $recordIdWithAutoUrn| ${divaOutputUpdateUrnTemplate} |  | OK | 
+*!
+
+Vi kontrollerar att den publicerade posten i diva-serien finns med i resultatet från tjänsten och har en url som pekar på divaklienten
+!define identifierExists {!-count(//*[local-name()='record'][.//*[local-name()='identifier']='urn:nbn:se:diva--!$recordIdWithAutoUrn!-' and ./*[local-name()='header']/*[local-name()='destinations']/*[local-name()='destination']/*[local-name()='url'][substring(text(), string-length(text()) - string-length('/divaclient/diva-output/-!$recordIdWithAutoUrn!-') + 1) = '/divaclient/diva-output/-!$recordIdWithAutoUrn!-']])=1-!}
+
+
+| Table:smartrics.rest.fitnesse.fixture.RestFixture | ${urnNbnUrl} |
+| setHeaders | Accept: application/xml|
+| GET | /all/diva/ | 200 |  | ${identifierExists} |
+*!
+
+!***> Clean up
+!| RecordEndpointFixture |
+|authToken|type|id|testDeleteRecord?|getStatusType?|
+|$systemAdminAuthToken|diva-output|$recordIdWithManualUrn    | | OK | 
+|$systemAdminAuthToken|diva-output|$recordIdWithAutoUrn | | OK |
 *!
