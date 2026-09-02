@@ -2,12 +2,12 @@
 Static
 ---
 !2 URN:NBN
+Each record of type alvin-record must have a permanent id of type URN:NBN. This URN:NBN is used as a stable and long-term identifier. When a new record of type alvin-record is created should the system automatically generate a new URN:NBN. New URN:NBN should have the format: '''urn:nbn:se:alvin:portal:record-{id}''' where {id} is the record's id in Alvin.
 
-Implementerar URN:NBN för Alvin. 
+A URN:NBN is permanent and must never be changed after the record has been created. This means that URN:NBN cannot be updated, replaced, or removed on an existing alvin-record record.
 
-Alvins URN:NBN ser ut:  urn:nbn:se:alvin:portal:record-{id}
-
-Se https://www.kb.se/pliktleverans-och-isbn/urnnbn/vad-ar-urnnbn.html för mer information
+More information about URN:NBN can be found here:
+https://www.kb.se/pliktleverans-och-isbn/urnnbn/vad-ar-urnnbn.html
 
 !3 Tests
   * '''Case 1''': An alvin-record must have a URN:NBN number matching it's ID after creation
@@ -22,6 +22,7 @@ Se https://www.kb.se/pliktleverans-och-isbn/urnnbn/vad-ar-urnnbn.html för mer i
 
 !define alvinRecordWithUrn {!-{"name":"record","children":[{"name":"typeOfResource","value":"txt"},{"name":"title","children":[{"name":"mainTitle","value":"fitnesseUrnTest"}]},{"name":"physicalLocation","children":[{"name":"heldBy","children":[{"name":"location","children":[{"name":"linkedRecordType","value":"alvin-location"},{"name":"linkedRecordId","value":"3"}]}]}]},{"name":"recordInfo","children":[{"name":"id","value":"234234"},{"name":"visibility","value":"-!${visibility}!-"},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"record"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvinData"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"3"}]}]}]}-!}
 
+We verify that the created record has a URN:NBN generated according to our pattern '''urn:nbn:se:alvin:portal:record-{id}''', with the correct record ID
 !define expectedAlvinRecordWithUrn {=~/(?=.*"name":"id","value":"234234")(?=.*"name":"urn","value":"urn:nbn:se:alvin:portal:record-234234")/}
 
 !| ChildComparerFixture |
@@ -30,11 +31,13 @@ Se https://www.kb.se/pliktleverans-och-isbn/urnnbn/vad-ar-urnnbn.html för mer i
 
 *!
 !***> Case 2: It must not be possible to manually update the URN:NBN number
+We manually set the URN:NBN value to '''urn:nbn:se:alvin:portal:record-000001'''
 !define recordType {alvin-record}
 !define expectedUpdateResult {OK}
 
 !define alvinUpdateRecordWithUrn {!-{"name":"record","children":[{"name":"typeOfResource","value":"txt"},{"name":"title","children":[{"name":"mainTitle","value":"updatedFitnesseUrnTest"}]},{"name":"physicalLocation","children":[{"name":"heldBy","children":[{"name":"location","children":[{"name":"linkedRecordType","value":"alvin-location"},{"name":"linkedRecordId","value":"3"}]}]}]},{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"234234"},{"name":"visibility","value":"-!${visibility}!-"},{"name":"inTrashBin","value":"false"},{"name":"urn","value":"urn:nbn:se:alvin:portal:record-000001"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"alvin-record"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"record"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvinData"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"3"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"151515"}]},{"name":"tsCreated","value":"2025-01-22T10:01:49.797866Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"151515"}]},{"name":"tsUpdated","value":"2025-01-22T10:01:49.797866Z"}]}]}]}-!}
 
+We verify that the URN:NBN value is still '''urn:nbn:se:alvin:portal:record-234234'''
 !define expectedAlvinRecordWithUrn {=~/(?=.*"name":"mainTitle","value":"updatedFitnesseUrnTest")(?=.*"name":"id","value":"234234")(?=.*"name":"urn","value":"urn:nbn:se:alvin:portal:record-234234")/}
 
 !| ChildComparerFixture |
@@ -43,11 +46,13 @@ Se https://www.kb.se/pliktleverans-och-isbn/urnnbn/vad-ar-urnnbn.html för mer i
 
 *!
 !***> Case 3: It must not be possible to delete the URN:NBN number
+We set '''no''' value for URN:NBN
 !define recordType {alvin-record}
 !define expectedUpdateResult {OK}
 
 !define alvinUpdateRecordWithUrn {!-{"name":"record","children":[{"name":"typeOfResource","value":"txt"},{"name":"title","children":[{"name":"mainTitle","value":"testDeleteUrn"}]},{"name":"physicalLocation","children":[{"name":"heldBy","children":[{"name":"location","children":[{"name":"linkedRecordType","value":"alvin-location"},{"name":"linkedRecordId","value":"3"}]}]}]},{"name":"recordInfo","children":[{"name":"ignoreOverwriteProtection","value":"true"},{"name":"id","value":"234234"},{"name":"visibility","value":"-!${visibility}!-"},{"name":"tsVisibility","value":"-!${tsVisibility}!-"},{"name":"inTrashBin","value":"false"},{"name":"type","children":[{"name":"linkedRecordType","value":"recordType"},{"name":"linkedRecordId","value":"alvin-record"}]},{"name":"validationType","children":[{"name":"linkedRecordType","value":"validationType"},{"name":"linkedRecordId","value":"record"}]},{"name":"dataDivider","children":[{"name":"linkedRecordType","value":"system"},{"name":"linkedRecordId","value":"alvinData"}]},{"name":"permissionUnit","children":[{"name":"linkedRecordType","value":"permissionUnit"},{"name":"linkedRecordId","value":"3"}]},{"name":"createdBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"151515"}]},{"name":"tsCreated","value":"2025-01-22T10:01:49.797866Z"},{"name":"updated","repeatId":"0","children":[{"name":"updatedBy","children":[{"name":"linkedRecordType","value":"user"},{"name":"linkedRecordId","value":"151515"}]},{"name":"tsUpdated","value":"2025-01-22T10:01:49.797866Z"}]}]}]}-!}
 
+We verify that the URN:NBN value is still '''urn:nbn:se:alvin:portal:record-234234'''
 !define expectedAlvinRecordWithUrn {=~/(?=.*"name":"mainTitle","value":"testDeleteUrn")(?=.*"name":"id","value":"234234")(?=.*"name":"urn","value":"urn:nbn:se:alvin:portal:record-234234")/}
 
 !| ChildComparerFixture |
@@ -55,90 +60,90 @@ Se https://www.kb.se/pliktleverans-och-isbn/urnnbn/vad-ar-urnnbn.html för mer i
 | $alvinAdminAuthToken | ${recordType} | $urnRecord | ${alvinUpdateRecordWithUrn} | ${expectedAlvinRecordWithUrn} | ${expectedUpdateResult} |
 *!
 
-!3 URN:NBN Hämtningstjänst
-Hämtningstjänsten är i första hand till för att KB skall kunna populera sin uppslagstjänst så att den pekar på aktuell url för ett givet URN:NBN, se:
+!3 URN:NBN Retrieval Service
+The Retrieval Service is primarily intended for KB to populate its lookup service so that it points to the current URL for a given URN:NBN, see:
 https://www.kb.se/pliktleverans-och-isbn/urnnbn/sla-upp-och-hitta-en-resurs.html
 
-I hämtningstjänsten finns det två endpoints definierade:
- * '''current''' – returnerar poster som har publicerats under de senaste 24 timmarna.
- * '''all''' – returnerar alla poster.
+In the Retrieval Service, two endpoints are defined:
+ * '''current''' – returns records that have been published during the last 24 hours.
+ * '''all''' – returns all records.
  
-Alla poster som skapas med Alvin powered by Cora får URN:NBN i samma serie: urn:nbn:se:alvin:portal:record-[postId].
+All records created with Alvin powered by Cora receive URN:NBN in the same series: urn:nbn:se:alvin:portal:record-[recordId].
 
-'''Url'''{{{https://[miljöUrl]/urn-nbn/[current/all]/[classicSerie|alvin]/}}}
-För de här testerna jobbar vi med två poster skapade av testerna ovan,  i serien '''alvin'''.
- * '''Case 1''': Opublicerade poster ska inte returneras av URN-NBN-tjänsten.
- * '''Case 2''': Nya publicerade poster som har formatet urn:nbn:se:alvin:portal:record-[postId] ska returneras av URN-NBN-tjänsten.
- * '''Case 4''': När en post avpubliceras ska den inte längre returneras av URN-NBN-tjänsten.
- * '''Case 5''': Om man försöker läsa en serie som inte finns ska tjänsten returnera ett tomt records-svar.
- * '''Case 6''': En post som är publicerad tidigare än för 24h sen, skall inte dyka upp i current.
- * '''Case 7''': Url ska finnas med i svaret, och peka på alvinklienten
+'''Url'''{{{https://[environmentUrl]/urn-nbn/[current/all]/[alvin]/}}}
+For these tests, we work with two records created by the tests above, in the series '''alvin'''.
+ * '''Case 1''': Unpublished records should not be returned by the URN-NBN service.
+ * '''Case 2''': New published records with the format urn:nbn:se:alvin:portal:record-[recordId] should be returned by the URN-NBN service.
+ * '''Case 4''': When a record is unpublished, it should no longer be returned by the URN-NBN service.
+ * '''Case 5''': If you attempt to read a series that does not exist, the service should return an empty records response.
+ * '''Case 6''': A record that was published more than 24 hours ago should not appear in current.
+ * '''Case 7''': URL should be included in the response and point to the alvin client.
 
-!***> Case 1: Opublicerade poster ska inte returneras av URN-NBN-tjänsten. → ingen av de två posterna finns med.
-Vi kontrollerar att den opublicerade posten i alvin-serien inte finns med i resultatet från tjänsten
+!***> Case 1: Unpublished records should not be returned by the URN-NBN service. → neither of the two records is included.
+We verify that the unpublished record in the alvin series is not included in the result from the service.
 !define expectedRecordsNotPresent {!-count(//*[local-name()='identifier'][text()='urn:nbn:se:alvin:portal:record--!$urnRecord!-'])=0-!}
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${urnNbnUrl} |
 | setHeaders | Accept: application/xml|
 | GET | /all/alvin/ | 200 |  | ${expectedRecordsNotPresent} |
 *!
 
-!***> Case 2: Nya publicerade poster som har formatet urn:nbn:se:alvin:portal:record-[postId] ska returneras av URN-NBN-tjänsten. → Diva posten publiceras och den ska nu vara med.
-Vi publicerar posten som ingår i alvin-serien.
+!***> Case 2: New published records with the format urn:nbn:se:alvin:portal:record-[recordId] should be returned by the URN-NBN service. → The Diva record is published and should now be included.
+We publish the record that is included in the alvin series.
 !define visibility {published}
 !define urnnbnValue {!-,{"name":"urn","value":"urn:nbn:se:alvin:portal:record--!$urnRecord!-"}-!}
-!***> Publicera alvin posten. 
+!***> Publish the alvin record. 
 !| ChildComparerFixture |
 | authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? | 
 | $alvinAdminAuthToken | ${recordType} | $urnRecord| ${alvinUpdateRecordWithUrn} |  | OK | 
 *!
 
-Vi kontrollerar att den publicerade posten i alvin-serien finns med i resultatet från tjänsten
+We verify that the published record in the alvin series is included in the result from the service.
 !define identifierExists {!-//*[local-name()='identifier'][text()='urn:nbn:se:alvin:portal:record--!$urnRecord!-']-!}
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${urnNbnUrl} |
 | setHeaders | Accept: application/xml|
 | GET | /all/alvin/ | 200 |  | ${identifierExists} |
 *!
 
-!***> Case 4a: Avpublicerade poster som har formatet urn:nbn:se:alvin:portal:record-[postId] ska inte returneras av URN-NBN-tjänsten. → Avpublicerade alvin posten ska inte längre vara med.
-Vi avpublicerar posten som ingår i alvin-serien.
+!***> Case 4a: Unpublished records with the format urn:nbn:se:alvin:portal:record-[recordId] should not be returned by the URN-NBN service. → The unpublished alvin record should no longer be included.
+We unpublish the record that is included in the alvin series.
 !define visibility {unpublished}
 !define urnnbnValue {!-,{"name":"urn","value":"urn:nbn:se:alvin:portal:record--!$urnRecord!-"}-!}
-!***> Avpublicera alvin posten. 
+!***> Unpublish the alvin record. 
 !| ChildComparerFixture |
 | authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? | 
 | $alvinAdminAuthToken | ${recordType} | $urnRecord| ${alvinUpdateRecordWithUrn} |  | OK | 
 *!
-Vi kontrollerar att den avpublicerade posten i alvin-serien finns med i resultatet från tjänsten
+We verify that the unpublished record in the alvin series is not included in the result from the service.
 !define expectedRecordsNotPresent {!-count(//*[local-name()='identifier'][text()='urn:nbn:se:alvin:portal:record--!$urnRecord!-'])=0-!}
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${urnNbnUrl} |
 | setHeaders | Accept: application/xml|
 | GET | /all/alvin/ | 200 |  | ${expectedRecordsNotPresent} |
 *!
 
-!***> Case 5: Om man försöker läsa en serie som inte finns ska tjänsten returnera ett tomt records-svar
-Vi kontrollerar att om man läser poster från en okänd serie '''nonExisting''' får man inga poster tillbaka i resultatet från tjänsten
+!***> Case 5: If you attempt to read a series that does not exist, the service should return an empty records response.
+We verify that if you read records from an unknown series '''nonExisting''', you receive no records back in the result from the service.
 !define expectedCountEmpty {count(//*[local-name()='record'])=0}
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${urnNbnUrl} |
 | setHeaders | Accept: application/xml|
 | GET | /all/nonExisting/ | 200 |  | ${expectedCountEmpty} |
 *!
 
-!***> Case 6:  En post som är publicerad tidigare än för 24h sen, skall inte dyka upp i current
-För att kunna sätta publiceringsdatum själva börjar vi med att ändra så att posttypen alvin-record inte använder visibility. Därefter sätter vi manuellt ett publiceringsdatum under år 2006 och publiserar posten. Vi sätter tillbaka att alvin-record använder visibility. 
-Med ett så gammalt publiceringsdatum på plats testar vi sedan att den dyker upp i all men inte i current.
+!***> Case 6: A record that was published more than 24 hours ago should not appear in current.
+In order to set the publication date ourselves, we start by changing so that the record type alvin-record does not use visibility. After that, we manually set a publication date during the year 2006 and publish the record. We reset alvin-record to use visibility.
+With such an old publication date in place, we then test that it appears in all but not in current.
 
-!***> Sätt ett publiceringsdatum under år  2006. 
-Spara nuvarande inställningar för alvin-record
+!***> Set a publication date during the year 2006. 
+Save current settings for alvin-record.
 !| RememberRecordState |
 | type       | id            | version  | remember? |
 | recordType | alvin-record   | original | OK        |
 
-Ändra så att alvin-record inte använder visibility, vilket gör att vi själva kan sätta ett publiceringsdatum.
+Change so that alvin-record does not use visibility, which allows us to set a publication date ourselves.
 !| UpdateRecordType |
 | id           | idSource     | public | usePermissionUnit | useVisibility | useTrashBin | storeInArchive | useHostRecordForPermissions |update? |
 | alvin-record | userSupplied | false  | true              | false         | true        | true           | false					   | OK     |
 
-Vi publicerar posten i alvin-serien med ett publiceringsdatum under år 2026
+We publish the record in the alvin series with a publication date during the year 2006.
 !define tsVisibility {2006-03-30T14:35:23.218738Z}
 !define visibility {published}
 !define urnnbnValue {!-,{"name":"urn","value":"urn:nbn:se:alvin:portal:record--!$urnRecord!-"}-!}
@@ -146,19 +151,19 @@ Vi publicerar posten i alvin-serien med ett publiceringsdatum under år 2026
 | authToken             | type          | id                 | json                           | testUpdateAndStoreRecord? | getStatusType? | 
 | $alvinAdminAuthToken | ${recordType} | $urnRecord| ${alvinUpdateRecordWithUrn} |                           | OK             | 
 
-Sätt tillbaka så att alvin-record använder visibility, genom att skriva tillbaka de sparade inställningarna från ovan.
+Reset alvin-record to use visibility by restoring the saved settings from above.
 !| RememberRecordState |
 | type       | id          | version  | memoryToStorage? |
 | recordType | alvin-record | original | OK               |
 
 *!
-Vi kontrollerar att i alvin-serien finns posten med i '''all'''
+We verify that the record in the alvin series is included in '''all'''.
 !define identifierExists {!-//*[local-name()='identifier'][text()='urn:nbn:se:alvin:portal:record--!$urnRecord!-']-!}
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${urnNbnUrl} |
 | setHeaders | Accept: application/xml|
 | GET | /all/alvin/ | 200 |  | ${identifierExists} |
 
-Vi kontrollerar att i alvin-serien finns posten inte med i '''current'''
+We verify that the record in the alvin series is not included in '''current'''.
 !define expectedRecordsNotPresent {!-count(//*[local-name()='identifier'][text()='urn:nbn:se:alvin:portal:record--!$urnRecord!-'])=0-!}
 | Table:smartrics.rest.fitnesse.fixture.RestFixture | ${urnNbnUrl} |
 | setHeaders | Accept: application/xml|
@@ -166,17 +171,17 @@ Vi kontrollerar att i alvin-serien finns posten inte med i '''current'''
 
 *!
 
-!***> Case 7: Url ska finnas med i svaret, och peka på alvinklienten
-Vi publicerar posten som ingår i alvin-serien.
+!***> Case 7: URL should be included in the response and point to the alvin client.
+We publish the record that is included in the alvin series.
 !define visibility {published}
 !define urnnbnValue {!-,{"name":"urn","value":"urn:nbn:se:alvin:portal:record--!$urnRecord!-"}-!}
-!***> Publicera alvin posten. 
+!***> Publish the alvin record. 
 !| ChildComparerFixture |
 | authToken | type | id | json | testUpdateAndStoreRecord? | getStatusType? | 
 | $alvinAdminAuthToken | ${recordType} | $urnRecord| ${alvinUpdateRecordWithUrn} |  | OK | 
 *!
 
-Vi kontrollerar att den publicerade posten i alvin-serien finns med i resultatet från tjänsten och har en url som pekar på alvinklienten
+We verify that the published record in the alvin series is included in the result from the service and has a URL that points to the alvin client.
 !define identifierExists {!-count(//*[local-name()='record'][.//*[local-name()='identifier']='urn:nbn:se:alvin:portal:record--!$urnRecord!-' and ./*[local-name()='header']/*[local-name()='destinations']/*[local-name()='destination']/*[local-name()='url'][substring(text(), string-length(text()) - string-length('/alvin/alvin-record/-!$urnRecord!-') + 1) = '/alvin/alvin-record/-!$urnRecord!-']])=1-!}
 
 
