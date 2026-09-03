@@ -1,10 +1,11 @@
 ---
 Static
 ---
-!***> Clean up READ test data
-!| Table:smartrics.rest.fitnesse.fixture.RestFixture|${systemUnderTestUrl}rest/    |
-| setHeader | authToken:$alvinAdminAuthToken |
-| DELETE | /record/alvin-record/$publishedRecord | 200 | | |
-| DELETE | /record/alvin-record/$unpublishedRecord | 200 | | |
-| DELETE | /record/alvin-record/$urnRecord | 200 | | |
+
+!***> Clean up
+!| RecordEndpointFixture |
+| authToken            | type         | id                 |testDeleteRecord?| getStatusType? |
+| $alvinAdminAuthToken | alvin-record | $urnRecord         |                 | OK             |
+| $alvinAdminAuthToken | alvin-record | $publishedRecord   |                 | OK             |
+| $alvinAdminAuthToken | alvin-record | $unpublishedRecord |                 | OK             |
 *!

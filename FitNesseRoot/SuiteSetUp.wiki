@@ -28,6 +28,7 @@ Suite
 | setAppTokenVerifierUrl | ${appTokenVerifierUrl} |
 | setIdpLoginUrl | ${idpLoginUrl} |
 | setGatekeeperServerUrl | ${gatekeeperServerUrl} |
+| setUrnNbnUrl | ${urnNbnUrl} |
 
 !| script | DependencyProvider |
 | setHttpHandlerFactoryClassName | se.uu.ub.cora.httphandler.HttpHandlerFactoryImp |
