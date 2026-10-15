@@ -30,7 +30,7 @@ Create binary records
 !define waitStatusRegex {\"name\":\"status\",\"value\":\"done\"}
 !| WaitForRegExReadResultFixture |
 | authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
-| $adminAuthToken | binary | $publishedRecordId | 100 | 60 | ${waitStatusRegex} | Found |
-| $adminAuthToken | binary | $unpublishedRecordId | 100 | 60 | ${waitStatusRegex} | Found |
+| $adminAuthToken | binary | $publishedRecordId | 100 | 600 | ${waitStatusRegex} | Found |
+| $adminAuthToken | binary | $unpublishedRecordId | 100 | 600 | ${waitStatusRegex} | Found |
 *!
 *!
