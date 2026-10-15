@@ -27,9 +27,10 @@ Create binary records
 | $adminAuthToken | binary | $publishedRecordId | aTiff.tiff | ${expectedUploadAnswer} | ${expectedUploadResult} |
 | $adminAuthToken | binary | $unpublishedRecordId | aTiff.tiff | ${expectedUploadAnswer} | ${expectedUploadResult} |
 
+!define waitStatusRegex {\"name\":\"status\",\"value\":\"done\"}
 !| WaitForRegExReadResultFixture |
 | authToken | recordType | recordId | sleepTime | maxNumberOfCalls | regEx | waitUntilUntilRegExpFoundInReadRecord? |
-| $adminAuthToken | binary | $publishedRecordId | 250 | 500 | \"name\":\"jp2\" | Found |
-| $adminAuthToken | binary | $unpublishedRecordId | 250 | 500 | \"name\":\"jp2\" | Found |
+| $adminAuthToken | binary | $publishedRecordId | 100 | 60 | ${waitStatusRegex} | Found |
+| $adminAuthToken | binary | $unpublishedRecordId | 100 | 60 | ${waitStatusRegex} | Found |
 *!
 *!

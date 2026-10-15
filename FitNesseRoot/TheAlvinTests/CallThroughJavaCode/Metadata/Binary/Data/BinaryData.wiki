@@ -38,7 +38,7 @@ Static
 | ${currentAuthToken} | binary | ${recordId} | large | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
 | ${currentAuthToken} | binary | ${recordId} | jp2 | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
 *!
-
+*!
 !***> Guest tests
 !***> Setup guest test case
 !define currentAuthToken {$guestToken}
@@ -69,4 +69,5 @@ Static
 | ${currentAuthToken} | binary | ${recordId} | medium | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
 | ${currentAuthToken} | binary | ${recordId} | large | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
 | ${currentAuthToken} | binary | ${recordId} | jp2 | ${expectedDownloadAnswer} | ${expectedDownloadStatus} |
+*!
 *!
